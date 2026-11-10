@@ -12,9 +12,6 @@ enum ElementTheme { energy, fire, ice, lightning, earth, water }
 class NinjagoArchiveApp extends StatefulWidget {
   const NinjagoArchiveApp({super.key});
 
-  static _NinjagoArchiveAppState of(BuildContext context) =>
-      context.findAncestorStateOfType<_NinjagoArchiveAppState>()!;
-
   @override
   State<NinjagoArchiveApp> createState() => _NinjagoArchiveAppState();
 }
@@ -41,9 +38,7 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   }
 
   void changeElement(ElementTheme element) {
-    setState(() {
-      _currentElement = element;
-    });
+    setState(() => _currentElement = element);
   }
 
   @override
@@ -70,7 +65,7 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
 }
 
 // -----------------------------------------------------------------------------
-// MODELS (Моделі даних)
+// MODELS
 // -----------------------------------------------------------------------------
 class Episode {
   final String season;
@@ -80,6 +75,7 @@ class Episode {
   final String quality;
   final String description;
   bool isFavorite;
+  bool isDownloaded;
 
   Episode({
     required this.season,
@@ -89,23 +85,9 @@ class Episode {
     required this.quality,
     required this.description,
     this.isFavorite = false,
+    this.isDownloaded = false,
   });
 }
-
-class SenseiQuote {
-  final String quote;
-  final String source;
-  SenseiQuote({required this.quote, required this.source});
-}
-
-// -----------------------------------------------------------------------------
-// MOCK DATA (Дані архіву)
-// -----------------------------------------------------------------------------
-final List<SenseiQuote> wuQuotes = [
-  SenseiQuote(quote: "Ніколи не відкладай на завтра те, що можна зробити сьогодні.", source: "Сенсей Ву"),
-  SenseiQuote(quote: "Найкращий спосіб перемогти ворога — зробити його своїм другом.", source: "Сенсей Ву"),
-  SenseiQuote(quote: "Ніндзя ніколи не здаються!", source: "Сенсей Ву"),
-];
 
 List<Episode> episodesArchive = [
   Episode(
@@ -114,8 +96,9 @@ List<Episode> episodesArchive = [
     title: 'Шлях Ніндзя',
     duration: '22 хв',
     quality: '1080p • Дубляж',
-    description: 'Коваля Кая відвідує загадковий старий ремісник Ву, який пропонує йому стати ніндзя...',
+    description: 'Коваля Кая відвідує загадковий старий ремісник Ву...',
     isFavorite: true,
+    isDownloaded: true,
   ),
   Episode(
     season: 'Пілотний сезон',
@@ -137,7 +120,7 @@ List<Episode> episodesArchive = [
 ];
 
 // -----------------------------------------------------------------------------
-// MAIN NAVIGATION (Головний контейнер)
+// MAIN CONTAINER
 // -----------------------------------------------------------------------------
 class MainContainer extends StatefulWidget {
   final ElementTheme currentElement;
@@ -158,6 +141,12 @@ class _MainContainerState extends State<MainContainer> {
   int _dailyWatchLimit = 3;
   bool _isPremium = false;
 
+  void activatePremium() {
+    setState(() {
+      _isPremium = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final activeColor = Theme.of(context).primaryColor;
@@ -165,15 +154,13 @@ class _MainContainerState extends State<MainContainer> {
     final List<Widget> screens = [
       HomeScreen(isPremium: _isPremium, dailyLimit: _dailyWatchLimit),
       const SeasonsCatalogScreen(),
-      const TimelineScreen(),
+      const BackpackScreen(),
       const OpeningsAudioScreen(),
       TeaShopSettingsScreen(
         currentElement: widget.currentElement,
         onElementChanged: widget.onElementChanged,
         isPremium: _isPremium,
-        onActivatePremium: () {
-          setState(() => _isPremium = true);
-        },
+        onActivatePremium: activatePremium,
       ),
     ];
 
@@ -189,7 +176,7 @@ class _MainContainerState extends State<MainContainer> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Головна'),
           BottomNavigationBarItem(icon: Icon(Icons.video_collection), label: 'Архів'),
-          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Хронологія'),
+          BottomNavigationBarItem(icon: Icon(Icons.backpack), label: 'Рюкзак'),
           BottomNavigationBarItem(icon: Icon(Icons.music_note), label: 'Опенинги'),
           BottomNavigationBarItem(icon: Icon(Icons.coffee), label: 'Лавка Ву'),
         ],
@@ -199,7 +186,7 @@ class _MainContainerState extends State<MainContainer> {
 }
 
 // -----------------------------------------------------------------------------
-// 1. HOME SCREEN (Головна)
+// 1. HOME SCREEN
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
@@ -210,111 +197,38 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    final randomQuote = wuQuotes[0];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'NINJAGO: Спінжитсу Архів',
-          style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
-        ),
+        title: Text('NINJAGO: Архів', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.send_rounded),
-            tooltip: 'Telegram Спільнота',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Перехід у Telegram-канал проекту...')),
-              );
-            },
-          ),
-        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          // Свиток Ву
           Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF252530),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: primaryColor.withOpacity(0.4)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.menu_book_rounded, color: primaryColor, size: 20),
-                    const SizedBox(width: 8),
-                    Text('Мудрість Сенсея Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text('"${randomQuote.quote}"', style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 14)),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Лимит просмотров
-          Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: primaryColor.withOpacity(0.3)),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  isPremium ? 'Статус: Премиум Ключ Активовано ⚡' : 'Безкоштовний суточний ліміт: $dailyLimit/5',
-                  style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w500),
-                ),
-                if (!isPremium)
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('Безліміт', style: TextStyle(color: primaryColor)),
-                  ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-
-          // Блок продолжения просмотра
-          const Text('Продовжити перегляд', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: Colors.white10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Пілотний сезон • Серія 1', style: TextStyle(color: primaryColor, fontSize: 13)),
-                const SizedBox(height: 4),
-                const Text('Шлях Ніндзя', style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
-                const SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Таймкод: 12:45 / 22:00', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    Icon(Icons.play_circle_fill, color: primaryColor, size: 36),
+                    Text(isPremium ? '👑 Статус: Премиум Безліміт' : '⚡ Безкоштовний режим', style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor)),
+                    const SizedBox(height: 4),
+                    Text(isPremium ? 'Всі серії без обмежень' : 'Доступно переглядів сьогодні: $dailyLimit/5', style: const TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 24),
-
-          // Раздел избравшего
-          const Text('Останні серії', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 20),
+          const Text('Останні поступлення', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ...episodesArchive.map((ep) => EpisodeCard(episode: ep)),
         ],
@@ -324,7 +238,7 @@ class HomeScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 2. SEASONS & ARCHIVE CATALOG (Всі 15 Сезонів + Спешли)
+// 2. SEASONS CATALOG
 // -----------------------------------------------------------------------------
 class SeasonsCatalogScreen extends StatelessWidget {
   const SeasonsCatalogScreen({super.key});
@@ -333,129 +247,60 @@ class SeasonsCatalogScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Архів Контенту', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
-          backgroundColor: Colors.transparent,
-          bottom: TabBar(
-            indicatorColor: primaryColor,
-            labelColor: primaryColor,
-            unselectedLabelColor: Colors.grey,
-            tabs: const [
-              Tab(text: 'Класичні Сезони (0-15)'),
-              Tab(text: 'Спецвипуски & Фільми'),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            // Таб 1: Сезоны 0-15
-            ListView.builder(
-              padding: const EdgeInsets.all(16),
-              itemCount: 16,
-              itemBuilder: (context, index) {
-                final title = index == 0 ? 'Пілотний сезон (2011)' : 'Сезон $index';
-                return Card(
-                  color: const Color(0xFF1B1B22),
-                  margin: const EdgeInsets.only(bottom: 10),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  child: ListTile(
-                    title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: const Text('1080p • Повний український дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: primaryColor),
-                  ),
-                );
-              },
-            ),
-            // Таб 2: Спешлы
-            ListView(
-              padding: const EdgeInsets.all(16),
-              children: [
-                _buildSpecialCard(context, 'День День Відпочинку (Day of the Departed)', '44 хв • 2016'),
-                _buildSpecialCard(context, 'LEGO Ninjago: Фільм (The Movie)', '1 год 41 хв • 2017'),
-                _buildSpecialCard(context, 'Острів (The Island)', '4 серії • 2021'),
-              ],
-            ),
-          ],
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Архів Сезонів (0–15)', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
       ),
-    );
-  }
-
-  Widget _buildSpecialCard(BuildContext context, String title, String info) {
-    final primaryColor = Theme.of(context).primaryColor;
-    return Card(
-      color: const Color(0xFF1B1B22),
-      margin: const EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        leading: Icon(Icons.star, color: primaryColor),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(info, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: 16,
+        itemBuilder: (context, index) {
+          final title = index == 0 ? 'Пілотний сезон (2011)' : 'Сезон $index';
+          return Card(
+            color: const Color(0xFF1B1B22),
+            margin: const EdgeInsets.only(bottom: 10),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            child: ListTile(
+              title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: const Text('1080p • Український дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
+              trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: primaryColor),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
-// 3. TIMELINE SCREEN (Інтерактивний Таймлайн)
+// 3. BACKPACK SCREEN
 // -----------------------------------------------------------------------------
-class TimelineScreen extends StatelessWidget {
-  const TimelineScreen({super.key});
+class BackpackScreen extends StatelessWidget {
+  const BackpackScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    final downloaded = episodesArchive.where((e) => e.isDownloaded).toList();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Хронологія Подій', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text('Офлайн-Рюкзак', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          _buildTimelineNode(context, '1. Початок', 'Пілотні серії (Пошук Золотої Зброї)', true),
-          _buildTimelineNode(context, '2. Класика', 'Сезони 1–2 (Розквіт Серпентинів та Оверлорд)', false),
-          _buildTimelineNode(context, '3. Технологічна Ера', 'Сезон 3: Перезавантаження', false),
-          _buildTimelineNode(context, '4. Турнір Стихій', 'Сезон 4: Змагання Майстра Чена', false),
-          _buildTimelineNode(context, '5. Одержимість', 'Сезон 5: Морро та Привиди', false),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTimelineNode(BuildContext context, String title, String desc, bool isFirst) {
-    final primaryColor = Theme.of(context).primaryColor;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Column(
-          children: [
-            CircleAvatar(radius: 8, backgroundColor: primaryColor),
-            Container(width: 2, height: 50, color: Colors.white10),
-          ],
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              const SizedBox(height: 4),
-              Text(desc, style: const TextStyle(color: Colors.grey, fontSize: 13)),
-              const SizedBox(height: 20),
-            ],
-          ),
-        )
-      ],
+      body: downloaded.isEmpty
+          ? const Center(child: Text('Рюкзак порожній.', style: TextStyle(color: Colors.grey)))
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: downloaded.map((ep) => EpisodeCard(episode: ep)).toList(),
+            ),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
-// 4. OPENINGS AUDIO PLAYER (Аудіоплеер Опенингів)
+// 4. OPENINGS AUDIO SCREEN
 // -----------------------------------------------------------------------------
 class OpeningsAudioScreen extends StatelessWidget {
   const OpeningsAudioScreen({super.key});
@@ -463,18 +308,11 @@ class OpeningsAudioScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-
-    final tracks = [
-      'The Weekend Whip (Original Pilot)',
-      'The Pirate Whip (Season 6)',
-      'The Rift Whip (Day of the Departed)',
-      'The Wicked Whip (Season 8)',
-      'The Ghost Whip (Season 5)',
-    ];
+    final tracks = ['The Weekend Whip (Original)', 'The Pirate Whip (S6)', 'The Wicked Whip (S8)'];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Радіо Монастиря: Опенинги', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text('Радіо Монастиря', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
       ),
       body: ListView.builder(
@@ -485,13 +323,8 @@ class OpeningsAudioScreen extends StatelessWidget {
             color: const Color(0xFF1B1B22),
             margin: const EdgeInsets.only(bottom: 10),
             child: ListTile(
-              leading: Icon(Icons.music_note_rounded, color: primaryColor),
-              title: Text(tracks[index], style: const TextStyle(fontWeight: FontWeight.w500)),
-              subtitle: const Text('The Fold • MP3 320kbps', style: TextStyle(color: Colors.grey, fontSize: 12)),
-              trailing: IconButton(
-                icon: const Icon(Icons.play_arrow_rounded),
-                onPressed: () {},
-              ),
+              leading: Icon(Icons.music_note, color: primaryColor),
+              title: Text(tracks[index]),
             ),
           );
         },
@@ -501,7 +334,7 @@ class OpeningsAudioScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS (Чайна лавка Ву / Зал Слави / Стихії)
+// 5. TEA SHOP & SETTINGS
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
@@ -523,32 +356,121 @@ class TeaShopSettingsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Чайна Лавка Сенсея Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text('Чайна Лавка Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // Раздел стихии
-          const Text('Вибір Сили Стихії (Тема)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Вибір Стихії (Тема)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Wrap(
-            spacing: 10,
+            spacing: 8,
             children: [
-              _buildElementChip(context, 'Енергія (Ллойд)', ElementTheme.energy, const Color(0xFF76FF03)),
-              _buildElementChip(context, 'Вогонь (Кай)', ElementTheme.fire, const Color(0xFFFF3D00)),
-              _buildElementChip(context, 'Лід (Зейн)', ElementTheme.ice, const Color(0xFF00E5FF)),
-              _buildElementChip(context, 'Блискавка (Джей)', ElementTheme.lightning, const Color(0xFF2979FF)),
-              _buildElementChip(context, 'Земля (Коул)', ElementTheme.earth, const Color(0xFFFF9100)),
-              _buildElementChip(context, 'Вода (Нія)', ElementTheme.water, const Color(0xFF00B0FF)),
+              _buildElementChip(context, 'Енергія', ElementTheme.energy, const Color(0xFF76FF03)),
+              _buildElementChip(context, 'Вогонь', ElementTheme.fire, const Color(0xFFFF3D00)),
+              _buildElementChip(context, 'Лід', ElementTheme.ice, const Color(0xFF00E5FF)),
+              _buildElementChip(context, 'Блискавка', ElementTheme.lightning, const Color(0xFF2979FF)),
+              _buildElementChip(context, 'Земля', ElementTheme.earth, const Color(0xFFFF9100)),
+              _buildElementChip(context, 'Вода', ElementTheme.water, const Color(0xFF00B0FF)),
             ],
           ),
           const SizedBox(height: 24),
-
-          // Зал славы
-          const Text('Зал Слави (Поддержка)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Вітрина Наборів (Досягнення)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Container(
-            padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(10)),
-            child: const Column(
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(12)),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _buildLegoBadge('Дракон', Icons.electric_bolt, true),
+                _buildLegoBadge('Мех', Icons.local_fire_department, false),
+                _buildLegoBadge('Монастир', Icons.temple_buddhist, false),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: primaryColor,
+              foregroundColor: Colors.black,
+              padding: const EdgeInsets.symmetric(vertical: 14),
+            ),
+            onPressed: () {
+              if (!isPremium) {
+                onActivatePremium();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('⚡ Премиум-ключ успішно активовано!')),
+                );
+              }
+            },
+            child: Text(
+              isPremium ? 'Премиум Активний 👑' : 'Ввести Премиум-Ключ',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildElementChip(BuildContext context, String label, ElementTheme theme, Color color) {
+    final isSelected = currentElement == theme;
+    return ChoiceChip(
+      label: Text(label, style: TextStyle(color: isSelected ? Colors.black : Colors.white)),
+      selected: isSelected,
+      selectedColor: color,
+      backgroundColor: const Color(0xFF1B1B22),
+      onSelected: (_) => onElementChanged(theme),
+    );
+  }
+
+  Widget _buildLegoBadge(String name, IconData icon, bool unlocked) {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundColor: unlocked ? Colors.amber : Colors.grey.withOpacity(0.2),
+          child: Icon(icon, color: unlocked ? Colors.black : Colors.grey),
+        ),
+        const SizedBox(height: 6),
+        Text(name, style: TextStyle(fontSize: 11, color: unlocked ? Colors.white : Colors.grey)),
+      ],
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// EPISODE CARD WIDGET
+// -----------------------------------------------------------------------------
+class EpisodeCard extends StatelessWidget {
+  final Episode episode;
+  const EpisodeCard({super.key, required this.episode});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Card(
+      color: const Color(0xFF1B1B22),
+      margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: primaryColor,
+          child: const Icon(Icons.play_arrow_rounded, color: Colors.black),
+        ),
+        title: Text('${episode.number}: ${episode.title}', style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('${episode.duration} • ${episode.quality}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(episode.isDownloaded ? Icons.download_done : Icons.download_outlined, color: Colors.grey, size: 20),
+            const SizedBox(width: 8),
+            Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryColor),
+          ],
+        ),
+      ),
+    );
+  }
+}
