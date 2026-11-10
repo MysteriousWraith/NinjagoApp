@@ -25,6 +25,9 @@ jobs:
           channel: 'stable'
           cache: true
 
+      - name: Generate Android scaffold
+        run: flutter create . --org com.ninjago.archive --project-name ninjago_archive
+
       - name: Install dependencies
         run: flutter pub get
 
