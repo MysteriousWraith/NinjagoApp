@@ -1,5 +1,5 @@
 name: ninjago_archive_ua
-description: "LEGO Ninjago Ukrainian Archive App"
+description: "Ninjago fan archive application in Ukrainian"
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.6
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
@@ -18,3 +18,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
