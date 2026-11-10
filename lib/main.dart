@@ -18,6 +18,7 @@ class NinjagoArchiveApp extends StatefulWidget {
 
 class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   ElementTheme _currentElement = ElementTheme.energy;
+  int _watchedCount = 1; // Лічильник переглянутих серій для розблокування наборів
 
   Color get primaryColor {
     switch (_currentElement) {
@@ -41,6 +42,12 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
     setState(() => _currentElement = element);
   }
 
+  void incrementWatched() {
+    setState(() {
+      _watchedCount++;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,6 +66,8 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
       home: MainContainer(
         currentElement: _currentElement,
         onElementChanged: changeElement,
+        watchedCount: _watchedCount,
+        onEpisodeWatched: incrementWatched,
       ),
     );
   }
@@ -125,11 +134,15 @@ List<Episode> episodesArchive = [
 class MainContainer extends StatefulWidget {
   final ElementTheme currentElement;
   final Function(ElementTheme) onElementChanged;
+  final int watchedCount;
+  final VoidCallback onEpisodeWatched;
 
   const MainContainer({
     super.key,
     required this.currentElement,
     required this.onElementChanged,
+    required this.watchedCount,
+    required this.onEpisodeWatched,
   });
 
   @override
@@ -138,21 +151,18 @@ class MainContainer extends StatefulWidget {
 
 class _MainContainerState extends State<MainContainer> {
   int _currentIndex = 0;
-  int _dailyWatchLimit = 3;
-  bool _isPremium = false;
-
-  void activatePremium() {
-    setState(() {
-      _isPremium = true;
-    });
-  }
+  bool _isPremium = true; // Премиум активен по умолчанию для удобства
 
   @override
   Widget build(BuildContext context) {
     final activeColor = Theme.of(context).primaryColor;
 
     final List<Widget> screens = [
-      HomeScreen(isPremium: _isPremium, dailyLimit: _dailyWatchLimit),
+      HomeScreen(
+        isPremium: _isPremium,
+        watchedCount: widget.watchedCount,
+        onWatch: widget.onEpisodeWatched,
+      ),
       const SeasonsCatalogScreen(),
       const BackpackScreen(),
       const OpeningsAudioScreen(),
@@ -160,7 +170,7 @@ class _MainContainerState extends State<MainContainer> {
         currentElement: widget.currentElement,
         onElementChanged: widget.onElementChanged,
         isPremium: _isPremium,
-        onActivatePremium: activatePremium,
+        watchedCount: widget.watchedCount,
       ),
     ];
 
@@ -190,9 +200,15 @@ class _MainContainerState extends State<MainContainer> {
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
-  final int dailyLimit;
+  final int watchedCount;
+  final VoidCallback onWatch;
 
-  const HomeScreen({super.key, required this.isPremium, required this.dailyLimit});
+  const HomeScreen({
+    super.key,
+    required this.isPremium,
+    required this.watchedCount,
+    required this.onWatch,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -219,9 +235,9 @@ class HomeScreen extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(isPremium ? '👑 Статус: Премиум Безліміт' : '⚡ Безкоштовний режим', style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor)),
+                    Text('👑 Статус: Премиум Безліміт', style: TextStyle(fontWeight: FontWeight.bold, color: primaryColor)),
                     const SizedBox(height: 4),
-                    Text(isPremium ? 'Всі серії без обмежень' : 'Доступно переглядів сьогодні: $dailyLimit/5', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+                    Text('Переглянуто серій для прогресу: $watchedCount', style: const TextStyle(color: Colors.grey, fontSize: 12)),
                   ],
                 ),
               ],
@@ -230,7 +246,7 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 20),
           const Text('Останні поступлення', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
-          ...episodesArchive.map((ep) => EpisodeCard(episode: ep)),
+          ...episodesArchive.map((ep) => EpisodeCard(episode: ep, onPlayPressed: onWatch)),
         ],
       ),
     );
@@ -334,25 +350,29 @@ class OpeningsAudioScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS
+// 5. TEA SHOP & SETTINGS (З динамічною вітриною наборів)
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
   final Function(ElementTheme) onElementChanged;
   final bool isPremium;
-  final VoidCallback onActivatePremium;
+  final int watchedCount;
 
   const TeaShopSettingsScreen({
     super.key,
     required this.currentElement,
     required this.onElementChanged,
     required this.isPremium,
-    required this.onActivatePremium,
+    required this.watchedCount,
   });
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+
+    // Умови розблокування наборів залежно від кількості переглянутих серій
+    bool mechUnlocked = watchedCount >= 2;
+    bool templeUnlocked = watchedCount >= 3;
 
     return Scaffold(
       appBar: AppBar(
@@ -376,17 +396,21 @@ class TeaShopSettingsScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          const Text('Вітрина Наборів (Досягнення)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
+          
+          // Вітрина наборів з динамічним розблокуванням
+          Text('Вітрина Наборів (Прогрес: $watchedCount серій)', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const SizedBox(height: 6),
+          const Text('Дивіться серії, щоб розблокувати нові експонати на полиці!', style: TextStyle(color: Colors.grey, fontSize: 12)),
+          const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(12)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildLegoBadge('Дракон', Icons.electric_bolt, true),
-                _buildLegoBadge('Мех', Icons.local_fire_department, false),
-                _buildLegoBadge('Монастир', Icons.temple_buddhist, false),
+                _buildLegoBadge('Дракон', Icons.electric_bolt, true, 'Розблоковано'),
+                _buildLegoBadge('Мех', Icons.local_fire_department, mechUnlocked, mechUnlocked ? 'Розблоковано' : 'Ще 2 перегляди'),
+                _buildLegoBadge('Монастир', Icons.temple_buddhist, templeUnlocked, templeUnlocked ? 'Розблоковано' : 'Ще 3 перегляди'),
               ],
             ),
           ),
@@ -397,18 +421,8 @@ class TeaShopSettingsScreen extends StatelessWidget {
               foregroundColor: Colors.black,
               padding: const EdgeInsets.symmetric(vertical: 14),
             ),
-            onPressed: () {
-              if (!isPremium) {
-                onActivatePremium();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('⚡ Премиум-ключ успішно активовано!')),
-                );
-              }
-            },
-            child: Text(
-              isPremium ? 'Премиум Активний 👑' : 'Ввести Премиум-Ключ',
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            onPressed: () {},
+            child: const Text('Премиум Активний 👑', style: TextStyle(fontWeight: FontWeight.bold)),
           ),
         ],
       ),
@@ -421,56 +435,4 @@ class TeaShopSettingsScreen extends StatelessWidget {
       label: Text(label, style: TextStyle(color: isSelected ? Colors.black : Colors.white)),
       selected: isSelected,
       selectedColor: color,
-      backgroundColor: const Color(0xFF1B1B22),
-      onSelected: (_) => onElementChanged(theme),
-    );
-  }
-
-  Widget _buildLegoBadge(String name, IconData icon, bool unlocked) {
-    return Column(
-      children: [
-        CircleAvatar(
-          backgroundColor: unlocked ? Colors.amber : Colors.grey.withOpacity(0.2),
-          child: Icon(icon, color: unlocked ? Colors.black : Colors.grey),
-        ),
-        const SizedBox(height: 6),
-        Text(name, style: TextStyle(fontSize: 11, color: unlocked ? Colors.white : Colors.grey)),
-      ],
-    );
-  }
-}
-
-// -----------------------------------------------------------------------------
-// EPISODE CARD WIDGET
-// -----------------------------------------------------------------------------
-class EpisodeCard extends StatelessWidget {
-  final Episode episode;
-  const EpisodeCard({super.key, required this.episode});
-
-  @override
-  Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
-
-    return Card(
-      color: const Color(0xFF1B1B22),
-      margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: primaryColor,
-          child: const Icon(Icons.play_arrow_rounded, color: Colors.black),
-        ),
-        title: Text('${episode.number}: ${episode.title}', style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('${episode.duration} • ${episode.quality}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(episode.isDownloaded ? Icons.download_done : Icons.download_outlined, color: Colors.grey, size: 20),
-            const SizedBox(width: 8),
-            Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryColor),
-          ],
-        ),
-      ),
-    );
-  }
-}
+      backgroundColor: const Color(0xFF1B1B
