@@ -1,286 +1,221 @@
 import 'package:flutter/material.dart';
-import '../models/ninjago_data.dart';
-import 'video_player_screen.dart';
-import 'widgets.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'models/ninjago_data.dart';
+import 'screens/home_screen.dart';
+import 'screens/archive_screen.dart';
+import 'screens/timeline_screen.dart';
+import 'screens/radio_screen.dart';
+import 'screens/backpack_screen.dart';
+import 'screens/shop_screen.dart';
 
-class SeasonsCatalogScreen extends StatefulWidget {
-  final Function(String, String) onWatch;
-  final Function(Episode) onToggleFavorite;
+// Сервіс для збереження закладок
+class FavoritesManager {
+  static const String _key = 'favorite_episodes';
 
-  const SeasonsCatalogScreen({
-    super.key, 
-    required this.onWatch,
-    required this.onToggleFavorite,
-  });
+  static Future<void> saveFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIds = episodesArchive
+        .where((ep) => ep.isFavorite)
+        .map((ep) => '${ep.season}_${ep.number}')
+        .toList();
+    await prefs.setStringList(_key, favoriteIds);
+  }
 
-  @override
-  State<SeasonsCatalogScreen> createState() => _SeasonsCatalogScreenState();
+  static Future<void> loadFavorites() async {
+    final prefs = await SharedPreferences.getInstance();
+    final favoriteIds = prefs.getStringList(_key) ?? [];
+    
+    for (var ep in episodesArchive) {
+      final id = '${ep.season}_${ep.number}';
+      ep.isFavorite = favoriteIds.contains(id);
+    }
+  }
 }
 
-class _SeasonsCatalogScreenState extends State<SeasonsCatalogScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  // Завантажуємо закладки перед запуском додатку
+  await FavoritesManager.loadFavorites();
+  runApp(const NinjagoArchiveApp());
+}
+
+class NinjagoArchiveApp extends StatefulWidget {
+  const NinjagoArchiveApp({super.key});
+
+  @override
+  State<NinjagoArchiveApp> createState() => _NinjagoArchiveAppState();
+}
+
+class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
+  ElementTheme _currentElement = ElementTheme.energy;
+  int _watchedCount = 1;
+  String _lastWatchedTitle = 'Шлях Ніндзя';
+  String _lastWatchedSeason = 'Пілотний сезон';
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _searchQuery = _searchController.text.trim().toLowerCase();
-      });
-    });
+    _loadFromPrefs();
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
+  Future<void> _loadFromPrefs() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _watchedCount = prefs.getInt('watchedCount') ?? 1;
+        _lastWatchedTitle = prefs.getString('lastWatchedTitle') ?? 'Шлях Ніндзя';
+        _lastWatchedSeason = prefs.getString('lastWatchedSeason') ?? 'Пілотний сезон';
+        
+        final themeIndex = prefs.getInt('currentElement') ?? 0;
+        if (themeIndex >= 0 && themeIndex < ElementTheme.values.length) {
+          _currentElement = ElementTheme.values[themeIndex];
+        }
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _saveTheme(ElementTheme element) async {
+    setState(() => _currentElement = element);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('currentElement', element.index);
+  }
+
+  Future<void> _updateProgress(String season, String title) async {
+    setState(() {
+      _watchedCount++;
+      _lastWatchedSeason = season;
+      _lastWatchedTitle = title;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('watchedCount', _watchedCount);
+    await prefs.setString('lastWatchedSeason', season);
+    await prefs.setString('lastWatchedTitle', title);
+  }
+
+  // Метод для перемикання та збереження статусу обраного
+  Future<void> _toggleFavorite(Episode episode) async {
+    setState(() {
+      episode.isFavorite = !episode.isFavorite;
+    });
+    await FavoritesManager.saveFavorites();
   }
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final activeColor = getElementColor(_currentElement);
 
-    List> matchingEpisodes = [];
-    if (_searchQuery.isNotEmpty) {
-      for (var season in allSeasons) {
-        for (var ep in season.episodes) {
-          final titleMatch = ep.title.toLowerCase().contains(_searchQuery);
-          final numMatch = ep.number.toString().contains(_searchQuery);
-          if (titleMatch || numMatch) {
-            matchingEpisodes.add({'season': season, 'episode': ep});
-          }
-        }
-      }
+    if (_isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(color: activeColor),
+          ),
+        ),
+      );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Архів Сезонів (0–15)', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.transparent,
+    return MaterialApp(
+      title: 'LEGO Ninjago Архів',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: const Color(0xFF0F0F14),
+        primaryColor: activeColor,
+        colorScheme: ColorScheme.dark(
+          primary: activeColor,
+          surface: const Color(0xFF1B1B22),
+        ),
+        fontFamily: 'Roboto',
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: 'Пошук серії за назвою або номером...',
-                hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
-                prefixIcon: Icon(Icons.search, color: primaryColor),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.grey),
-                        onPressed: () => _searchController.clear(),
-                      )
-                    : null,
-                filled: true,
-                fillColor: const Color(0xFF1B1B22),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor.withOpacity(0.15)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor.withOpacity(0.15)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: _searchQuery.isNotEmpty
-                ? (matchingEpisodes.isEmpty
-                    ? Center(
-                        child: Text(
-                          'Нічого не знайдено 🥷',
-                          style: TextStyle(color: Colors.grey.withOpacity(0.7), fontSize: 16),
-                        ),
-                      )
-                    : ListView.builder(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: matchingEpisodes.length,
-                        itemBuilder: (context, index) {
-                          final item = matchingEpisodes[index];
-                          final SeasonInfo season = item['season'];
-                          final Episode ep = item['episode'];
-                          return EpisodeCard(
-                            episode: ep,
-                            onPlayPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VideoPlayerScreen(
-                                    episode: ep,
-                                    onWatch: widget.onWatch,
-                                  ),
-                                ),
-                              );
-                            },
-                            onFavoritePressed: () {
-                              setState(() {
-                                widget.onToggleFavorite(ep);
-                              });
-                            },
-                          );
-                        },
-                      ))
-                : ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    itemCount: allSeasons.length,
-                    itemBuilder: (context, index) {
-                      final s = allSeasons[index];
-                      return Card(
-                        color: const Color(0xFF1B1B22),
-                        margin: const EdgeInsets.only(bottom: 10),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(14),
-                          side: BorderSide(color: primaryColor.withOpacity(0.15)),
-                        ),
-                        child: ListTile(
-                          title: Text(s.title, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
-                          subtitle: Text('${s.year} • ${s.episodeCount} серій • 1080p Дубляж', style: const TextStyle(color: Colors.grey, fontSize: 12)),
-                          trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: primaryColor),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SeasonDetailScreen(
-                                  season: s, 
-                                  onWatch: widget.onWatch,
-                                  onToggleFavorite: widget.onToggleFavorite,
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                  ),
-          ),
-        ],
+      home: MainContainer(
+        currentElement: _currentElement,
+        onElementChanged: _saveTheme,
+        watchedCount: _watchedCount,
+        lastWatchedSeason: _lastWatchedSeason,
+        lastWatchedTitle: _lastWatchedTitle,
+        onEpisodeWatched: _updateProgress,
+        onToggleFavorite: _toggleFavorite,
       ),
     );
   }
 }
 
-class SeasonDetailScreen extends StatefulWidget {
-  final SeasonInfo season;
-  final Function(String, String) onWatch;
+class MainContainer extends StatefulWidget {
+  final ElementTheme currentElement;
+  final Function(ElementTheme) onElementChanged;
+  final int watchedCount;
+  final String lastWatchedSeason;
+  final String lastWatchedTitle;
+  final Function(String, String) onEpisodeWatched;
   final Function(Episode) onToggleFavorite;
 
-  const SeasonDetailScreen({
-    super.key, 
-    required this.season, 
-    required this.onWatch,
+  const MainContainer({
+    super.key,
+    required this.currentElement,
+    required this.onElementChanged,
+    required this.watchedCount,
+    required this.lastWatchedSeason,
+    required this.lastWatchedTitle,
+    required this.onEpisodeWatched,
     required this.onToggleFavorite,
   });
 
   @override
-  State<SeasonDetailScreen> createState() => _SeasonDetailScreenState();
+  State<MainContainer> createState() => _MainContainerState();
 }
 
-class _SeasonDetailScreenState extends State<SeasonDetailScreen> {
-  final TextEditingController _searchController = TextEditingController();
-  String _searchQuery = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _searchController.addListener(() {
-      setState(() {
-        _searchQuery = _searchController.text.trim().toLowerCase();
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    _searchController.dispose();
-    super.dispose();
-  }
+class _MainContainerState extends State<MainContainer> {
+  int _currentIndex = 0;
+  final bool _isPremium = true;
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final activeColor = Theme.of(context).primaryColor;
 
-    final filteredEpisodes = widget.season.episodes.where((ep) {
-      final titleMatch = ep.title.toLowerCase().contains(_searchQuery);
-      final numMatch = ep.number.toString().contains(_searchQuery);
-      return titleMatch || numMatch;
-    }).toList();
+    final List<Widget> screens = [
+      HomeScreen(
+        isPremium: _isPremium,
+        watchedCount: widget.watchedCount,
+        lastWatchedSeason: widget.lastWatchedSeason,
+        lastWatchedTitle: widget.lastWatchedTitle,
+        onWatch: widget.onEpisodeWatched,
+      ),
+      SeasonsCatalogScreen(
+        onWatch: widget.onEpisodeWatched,
+        onToggleFavorite: widget.onToggleFavorite,
+      ),
+      const TimelineScreen(),
+      const RadioScreen(),
+      const BackpackScreen(),
+      TeaShopSettingsScreen(
+        currentElement: widget.currentElement,
+        onElementChanged: widget.onElementChanged,
+        isPremium: _isPremium,
+        watchedCount: widget.watchedCount,
+      ),
+    ];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.season.title, style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18)),
-        backgroundColor: Colors.transparent,
-      ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              controller: _searchController,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: 'Пошук серії у сезоні...',
-                hintStyle: TextStyle(color: Colors.white.withOpacity(0.4), fontSize: 14),
-                prefixIcon: Icon(Icons.search, color: primaryColor),
-                suffixIcon: _searchQuery.isNotEmpty
-                    ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.grey),
-                        onPressed: () => _searchController.clear(),
-                      )
-                    : null,
-                filled: true,
-                fillColor: const Color(0xFF1B1B22),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor.withOpacity(0.15)),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor.withOpacity(0.15)),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: primaryColor),
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: filteredEpisodes.isEmpty
-                ? Center(
-                    child: Text(
-                      'Серій не знайдено',
-                      style: TextStyle(color: Colors.grey.withOpacity(0.7), fontSize: 16),
-                    ),
-                  )
-                : ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    children: [
-                      Text('Серії сезону (${filteredEpisodes.length})', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
-                      const SizedBox(height: 12),
-                      ...filteredEpisodes.map((ep) => EpisodeCard(
-                        episode: ep,
-                        onPlayPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: widget.onWatch)));
-                        },
-                        onFavoritePressed: () {
-                          setState(() {
-                            widget.onToggleFavorite(ep);
-                          });
-                        },
-                      )),
-                    ],
-                  ),
-          ),
+      body: screens[_currentIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) => setState(() => _currentIndex = index),
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xFF141419),
+        selectedItemColor: activeColor,
+        unselectedItemColor: Colors.grey.shade600,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Головна'),
+          BottomNavigationBarItem(icon: Icon(Icons.video_collection), label: 'Архів'),
+          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Хронологія'),
+          BottomNavigationBarItem(icon: Icon(Icons.radio), label: 'Радіо'),
+          BottomNavigationBarItem(icon: Icon(Icons.backpack), label: 'Рюкзак'),
+          BottomNavigationBarItem(icon: Icon(Icons.coffee), label: 'Лавка'),
         ],
       ),
     );
