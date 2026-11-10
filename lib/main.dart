@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const NinjagoArchiveApp());
 }
 
@@ -22,6 +24,50 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   int _watchedCount = 1;
   String _lastWatchedTitle = 'Шлях Ніндзя';
   String _lastWatchedSeason = 'Пілотний сезон';
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFromPrefs();
+  }
+
+  Future<void> _loadFromPrefs() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        _watchedCount = prefs.getInt('watchedCount') ?? 1;
+        _lastWatchedTitle = prefs.getString('lastWatchedTitle') ?? 'Шлях Ніндзя';
+        _lastWatchedSeason = prefs.getString('lastWatchedSeason') ?? 'Пілотний сезон';
+        
+        final themeIndex = prefs.getInt('currentElement') ?? 0;
+        if (themeIndex >= 0 && themeIndex < ElementTheme.values.length) {
+          _currentElement = ElementTheme.values[themeIndex];
+        }
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() => _isLoading = false);
+    }
+  }
+
+  Future<void> _saveTheme(ElementTheme element) async {
+    setState(() => _currentElement = element);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('currentElement', element.index);
+  }
+
+  Future<void> _updateProgress(String season, String title) async {
+    setState(() {
+      _watchedCount++;
+      _lastWatchedSeason = season;
+      _lastWatchedTitle = title;
+    });
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('watchedCount', _watchedCount);
+    await prefs.setString('lastWatchedSeason', season);
+    await prefs.setString('lastWatchedTitle', title);
+  }
 
   Color get primaryColor {
     switch (_currentElement) {
@@ -43,20 +89,19 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
     }
   }
 
-  void changeElement(ElementTheme element) {
-    setState(() => _currentElement = element);
-  }
-
-  void updateProgress(String season, String title) {
-    setState(() {
-      _watchedCount++;
-      _lastWatchedSeason = season;
-      _lastWatchedTitle = title;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(color: primaryColor),
+          ),
+        ),
+      );
+    }
+
     return MaterialApp(
       title: 'LEGO Ninjago Архів',
       debugShowCheckedModeBanner: false,
@@ -72,11 +117,11 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
       ),
       home: MainContainer(
         currentElement: _currentElement,
-        onElementChanged: changeElement,
+        onElementChanged: _saveTheme,
         watchedCount: _watchedCount,
         lastWatchedSeason: _lastWatchedSeason,
         lastWatchedTitle: _lastWatchedTitle,
-        onEpisodeWatched: updateProgress,
+        onEpisodeWatched: _updateProgress,
       ),
     );
   }
