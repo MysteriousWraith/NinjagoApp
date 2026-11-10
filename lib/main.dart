@@ -111,7 +111,7 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       _buildPlaceholder('Головна'),
       const ArchiveScreen(),
       _buildPlaceholder('Хронологія'),
-      _buildPlaceholder('Радіо'),
+      RadioScreen(themeColor: widget.themeColor),
       _buildPlaceholder('Рюкзак'),
       ShopScreen(
         currentTheme: widget.currentTheme,
@@ -147,6 +147,93 @@ class _MainHomeScreenState extends State<MainHomeScreen> {
       child: Text(
         title,
         style: TextStyle(fontSize: 24, color: widget.themeColor),
+      ),
+    );
+  }
+}
+
+class ArchiveScreen extends StatelessWidget {
+  const ArchiveScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final seasons = [
+      {'title': 'Пілотний сезон (Шлях Ніндзя)', 'info': '2011 • 2 серій • 1080p Дубляж'},
+      {'title': 'Сезон 1: Воскресіння Змій', 'info': '2011-2012 • 13 серій • 1080p Дубляж'},
+      {'title': 'Сезон 2: Спадщина Зеленого Ніндзя', 'info': '2012-2013 • 13 серій • 1080p Дубляж'},
+      {'title': 'Сезон 3: Перезавантаження', 'info': '2014 • 8 серій • 1080p Дубляж'},
+      {'title': 'Сезон 4: Турнір Стихій', 'info': '2015 • 10 серій • 1080p Дубляж'},
+      {'title': 'Сезон 5: Одержимість', 'info': '2015 • 10 серій • 1080p Дубляж'},
+      {'title': 'Сезон 6: Небесні Пірати', 'info': '2016 • 10 серій • 1080p Дубляж'},
+      {'title': 'Сезон 7: Руки Часу', 'info': '2017 • 10 серій • 1080p Дубляж'},
+      {'title': 'Сезон 8: Сини Гармадона', 'info': '2018 • 10 серій • 1080p Дубляж'},
+    ];
+
+    return Scaffold(
+      appBar: AppBar(title: const Text('Архів Сезонів (0–15)')),
+      body: ListView.builder(
+        itemCount: seasons.length,
+        itemBuilder: (context, index) {
+          final season = seasons[index];
+          return Card(
+            color: const Color(0xFF1E1E1E),
+            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+            child: ListTile(
+              title: Text(season['title']!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              subtitle: Text(season['info']!, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {},
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class RadioScreen extends StatelessWidget {
+  final Color themeColor;
+  const RadioScreen({super.key, required this.themeColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Радіо Монастиря')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: themeColor, width: 2),
+              ),
+              child: Icon(Icons.music_note, size: 50, color: themeColor),
+            ),
+            const SizedBox(height: 30),
+            const Text('Зараз грає:', style: TextStyle(color: Colors.grey, fontSize: 14)),
+            const SizedBox(height: 8),
+            const Text('The Weekend Whip (Classic Mix)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(icon: const Icon(Icons.skip_previous, size: 36), onPressed: () {}),
+                const SizedBox(width: 20),
+                Container(
+                  decoration: BoxDecoration(shape: BoxShape.circle, color: themeColor),
+                  child: IconButton(
+                    icon: const Icon(Icons.play_arrow, size: 36, color: Colors.black),
+                    onPressed: () {},
+                  ),
+                ),
+                const SizedBox(width: 20),
+                IconButton(icon: const Icon(Icons.skip_next, size: 36), onPressed: () {}),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -202,10 +289,10 @@ class ShopScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildSetItem('Дракон', Icons.flash_on, true),
-              _buildSetItem('Мех', Icons.whatshot, true),
-              _buildSetItem('Монастир', Icons.temple_buddhist, true),
-              _buildSetItem('Дарунок Долі', Icons.sailing, false),
+              _buildSetItem('Дракон', Icons.flash_on, true, 'Розблоковано'),
+              _buildSetItem('Мех', Icons.whatshot, false, 'Ще 2 перегляди'),
+              _buildSetItem('Монастир', Icons.temple_buddhist, false, 'Ще 3 перегляди'),
+              _buildSetItem('Дарунок Долі', Icons.sailing, false, 'Ще 5 переглядів'),
             ],
           ),
           const SizedBox(height: 20),
@@ -246,21 +333,21 @@ class ShopScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildSetItem(String title, IconData icon, bool unlocked) {
+  Widget _buildSetItem(String title, IconData icon, bool unlocked, String statusText) {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(14),
           decoration: BoxDecoration(
             color: unlocked ? themeColor.withOpacity(0.2) : Colors.grey.withOpacity(0.1),
             shape: BoxShape.circle,
             border: Border.all(color: unlocked ? themeColor : Colors.grey),
           ),
-          child: Icon(icon, color: unlocked ? themeColor : Colors.grey, size: 28),
+          child: Icon(icon, color: unlocked ? themeColor : Colors.grey, size: 26),
         ),
         const SizedBox(height: 6),
         Text(title, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-        Text(unlocked ? 'Розблоковано' : 'Закрито', style: TextStyle(fontSize: 10, color: unlocked ? themeColor : Colors.grey)),
+        Text(statusText, style: TextStyle(fontSize: 10, color: unlocked ? themeColor : Colors.grey)),
       ],
     );
   }
@@ -285,32 +372,6 @@ class ShopScreen extends StatelessWidget {
             ],
           ),
         ],
-      ),
-    );
-  }
-}
-
-class ArchiveScreen extends StatelessWidget {
-  const ArchiveScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Архів Сезонів (0–15)')),
-      body: ListView.builder(
-        itemCount: 16,
-        itemBuilder: (context, index) {
-          return Card(
-            color: const Color(0xFF1E1E1E),
-            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-            child: ListTile(
-              title: Text('Сезон $index: Назва сезону', style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: const Text('1080p • Дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
-              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-              onTap: () {},
-            ),
-          );
-        },
       ),
     );
   }
