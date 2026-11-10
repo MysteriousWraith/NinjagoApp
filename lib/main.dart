@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const NinjagoArchiveApp());
@@ -39,10 +38,6 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
     }
   }
 
-  Color get secondaryCardColor {
-    return primaryColor.withOpacity(0.08);
-  }
-
   void changeElement(ElementTheme element) {
     setState(() => _currentElement = element);
   }
@@ -73,7 +68,6 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
         onElementChanged: changeElement,
         watchedCount: _watchedCount,
         onEpisodeWatched: incrementWatched,
-        secondaryCardColor: secondaryCardColor,
       ),
     );
   }
@@ -155,7 +149,6 @@ class MainContainer extends StatefulWidget {
   final Function(ElementTheme) onElementChanged;
   final int watchedCount;
   final VoidCallback onEpisodeWatched;
-  final Color secondaryCardColor;
 
   const MainContainer({
     super.key,
@@ -163,7 +156,6 @@ class MainContainer extends StatefulWidget {
     required this.onElementChanged,
     required this.watchedCount,
     required this.onEpisodeWatched,
-    required this.secondaryCardColor,
   });
 
   @override
@@ -183,7 +175,6 @@ class _MainContainerState extends State<MainContainer> {
         isPremium: _isPremium,
         watchedCount: widget.watchedCount,
         onWatch: widget.onEpisodeWatched,
-        secondaryCardColor: widget.secondaryCardColor,
       ),
       const SeasonsCatalogScreen(),
       const TimelineScreen(),
@@ -193,7 +184,6 @@ class _MainContainerState extends State<MainContainer> {
         onElementChanged: widget.onElementChanged,
         isPremium: _isPremium,
         watchedCount: widget.watchedCount,
-        secondaryCardColor: widget.secondaryCardColor,
       ),
     ];
 
@@ -225,14 +215,12 @@ class HomeScreen extends StatelessWidget {
   final bool isPremium;
   final int watchedCount;
   final VoidCallback onWatch;
-  final Color secondaryCardColor;
 
   const HomeScreen({
     super.key,
     required this.isPremium,
     required this.watchedCount,
     required this.onWatch,
-    required this.secondaryCardColor,
   });
 
   @override
@@ -249,7 +237,7 @@ class HomeScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          // Свиток мудрості Сенсея Ву (Глибинний стилізований дизайн)
+          // Свиток мудрості Сенсея Ву
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -440,14 +428,13 @@ class BackpackScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS (З прямим посиланням t.me/Veiqness)
+// 5. TEA SHOP & SETTINGS
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
   final Function(ElementTheme) onElementChanged;
   final bool isPremium;
   final int watchedCount;
-  final Color secondaryCardColor;
 
   const TeaShopSettingsScreen({
     super.key,
@@ -455,18 +442,35 @@ class TeaShopSettingsScreen extends StatelessWidget {
     required this.onElementChanged,
     required this.isPremium,
     required this.watchedCount,
-    required this.secondaryCardColor,
   });
 
-  Future<void> _openTelegram(BuildContext context) async {
-    final Uri url = Uri.parse('https://t.me/Veiqness');
-    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Не вдалося відкрити Telegram: @Veiqness')),
-        );
-      }
-    }
+  void _showTelegramDialog(BuildContext context, Color primaryColor) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1B1B22),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: Text('Зв\'язок з Автором', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Напишіть мені в Telegram для отримання Премиум-ключа або підтримки проєкту:'),
+            SizedBox(height: 12),
+            SelectableText(
+              '@Veiqness',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Закрити', style: TextStyle(color: primaryColor)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -519,7 +523,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // КНОПКА ЗВ'ЯЗКУ З ПРЯМИМ ПЕРЕХОДОМ В TELEGRAM
+          // КНОПКА ЗВ'ЯЗКУ С TELEGRAM
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
@@ -543,15 +547,15 @@ class TeaShopSettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
-                    style: ElevatedButton.styleFrom(
+            style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
-             foregroundColor: Colors.black,
+                      foregroundColor: Colors.black,
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.send_rounded),
-                    label: const Text('Написати в Telegram (@Veiqness)', style: TextStyle(fontWeight: FontWeight.bold)),
-                    onPressed: () => _openTelegram(context),
+                    label: const Text('Telegram: @Veiqness', style: TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () => _showTelegramDialog(context, primaryColor),
                   ),
                 ),
               ],
