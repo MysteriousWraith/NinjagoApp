@@ -26,20 +26,20 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   Color get primaryColor {
     switch (_currentElement) {
       case ElementTheme.fire:
-        return const Color(0xFFFF3D00); // Кай (Вогонь)
+        return const Color(0xFFFF3D00); // Кай
       case ElementTheme.ice:
-        return const Color(0xFF00E5FF); // Зейн (Лід)
+        return const Color(0xFF00E5FF); // Зейн
       case ElementTheme.lightning:
-        return const Color(0xFF2979FF); // Джей (Блискавка)
+        return const Color(0xFF2979FF); // Джей
       case ElementTheme.earth:
-        return const Color(0xFFFF9100); // Коул (Земля)
+        return const Color(0xFFFF9100); // Коул
       case ElementTheme.water:
-        return const Color(0xFF00B0FF); // Нія (Вода)
+        return const Color(0xFF00B0FF); // Нія
       case ElementTheme.garmadon:
         return const Color(0xFFD500F9); // Тень Гармадона
       case ElementTheme.energy:
       default:
-        return const Color(0xFF76FF03); // Ллойд (Енергія)
+        return const Color(0xFF76FF03); // Ллойд
     }
   }
 
@@ -136,7 +136,6 @@ final List<SenseiQuote> senseiQuotes = [
   SenseiQuote(quote: "Ніндзя ніколи не здаються, коли вірять у своїх друзів.", author: "Сенсей Ву"),
 ];
 
-// Повна база сезонів 0–15
 final List<SeasonInfo> allSeasons = [
   SeasonInfo(
     number: 0,
@@ -377,8 +376,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             const Text('Сенсей Ву перегорнув пісочний годинник! Випадкова серія:'),
             const SizedBox(height: 12),
-            Text('${randomEpisode.season} - ${randomEpisode.number}
-«${randomEpisode.title}»', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 16)),
+            Text('${randomEpisode.season} - ${randomEpisode.number}\n«${randomEpisode.title}»', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 16)),
           ],
         ),
         actions: [
@@ -800,7 +798,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1B1B22),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('Зв'язок з Автором', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text("Зв'язок з Автором", style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         content: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -882,7 +880,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Зв'язок з Автором & Ключі', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                const Text("Зв'язок з Автором & Ключі", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 const Text('Потрібен Премиум-ключ або хочете підтримати проєкт? Пишіть автору в Telegram!', style: TextStyle(color: Colors.grey, fontSize: 12)),
                 const SizedBox(height: 14),
@@ -960,15 +958,15 @@ class EpisodeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final primaryModelColor = Theme.of(context).primaryColor;
 
     return Card(
       color: const Color(0xFF1B1B22),
       margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: primaryColor.withOpacity(0.2))),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: primaryModelColor.withOpacity(0.2))),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: primaryColor,
+          backgroundColor: primaryModelColor,
           child: IconButton(
             icon: const Icon(Icons.play_arrow_rounded, color: Colors.black),
             onPressed: onPlayPressed,
@@ -981,7 +979,7 @@ class EpisodeCard extends StatelessWidget {
           children: [
             Icon(episode.isDownloaded ? Icons.download_done : Icons.download_outlined, color: Colors.grey, size: 20),
             const SizedBox(width: 8),
-            Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryColor),
+            Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryModelColor),
           ],
         ),
         onTap: onPlayPressed,
@@ -989,3 +987,6 @@ class EpisodeCard extends StatelessWidget {
     );
   }
 }
+```
+
+Скопіюй цей вміст у файл `lib/main.dart` і надсилай в GitHub через Termux!
