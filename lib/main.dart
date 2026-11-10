@@ -98,6 +98,20 @@ class Episode {
   });
 }
 
+class SenseiQuote {
+  final String quote;
+  final String author;
+  SenseiQuote({required this.quote, required this.author});
+}
+
+// Список мудростей Сенсея Ву
+final List<SenseiQuote> senseiQuotes = [
+  SenseiQuote(quote: "Ніколи не відкладай на завтра те, що можна зробити сьогодні.", author: "Сенсей Ву"),
+  SenseiQuote(quote: "Шлях до справжньої сили лежить через дисципліну та серце ніндзя.", author: "Сенсей Ву"),
+  SenseiQuote(quote: "Учень вчить вчителя. Навіть найменший може змінити все.", author: "Сенсей Ву"),
+  SenseiQuote(quote: "Ніндзя ніколи не здаються, коли вірять у своїх друзів.", author: "Сенсей Ву"),
+];
+
 List<Episode> episodesArchive = [
   Episode(
     season: 'Пілотний сезон',
@@ -164,7 +178,7 @@ class _MainContainerState extends State<MainContainer> {
         onWatch: widget.onEpisodeWatched,
       ),
       const SeasonsCatalogScreen(),
-      const TimelineScreen(), // Новий інтерактивний таймлайн
+      const TimelineScreen(),
       const BackpackScreen(),
       TeaShopSettingsScreen(
         currentElement: widget.currentElement,
@@ -186,7 +200,7 @@ class _MainContainerState extends State<MainContainer> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Головна'),
           BottomNavigationBarItem(icon: Icon(Icons.video_collection), label: 'Архів'),
-          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Хронологія'), // Іконка таймлайну
+          BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Хронологія'),
           BottomNavigationBarItem(icon: Icon(Icons.backpack), label: 'Рюкзак'),
           BottomNavigationBarItem(icon: Icon(Icons.coffee), label: 'Лавка Ву'),
         ],
@@ -196,7 +210,7 @@ class _MainContainerState extends State<MainContainer> {
 }
 
 // -----------------------------------------------------------------------------
-// 1. HOME SCREEN
+// 1. HOME SCREEN (З цитатою Сенсея Ву)
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
@@ -213,6 +227,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
+    // Беремо першу мудрість для демонстрації
+    final quote = senseiQuotes[0];
 
     return Scaffold(
       appBar: AppBar(
@@ -222,6 +238,37 @@ class HomeScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
+          // Свиток мудрості Сенсея Ву
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1B1B22),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: primaryColor.withOpacity(0.4)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Icon(Icons.menu_book_rounded, color: primaryColor, size: 20),
+                    const SizedBox(width: 8),
+                    Text('Свиток Мудрості Сенсея Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 13)),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Text('"${quote.quote}"', style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 13, color: Colors.white70)),
+                const SizedBox(height: 4),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Text('— ${quote.author}', style: TextStyle(color: primaryColor, fontSize: 11, fontWeight: FontWeight.bold)),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // Статус Премиума
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
@@ -290,7 +337,7 @@ class SeasonsCatalogScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 3. TIMELINE SCREEN (Інтерактивний Таймлайн)
+// 3. TIMELINE SCREEN
 // -----------------------------------------------------------------------------
 class TimelineScreen extends StatelessWidget {
   const TimelineScreen({super.key});
@@ -372,7 +419,7 @@ class BackpackScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS (Чайна лавка Ву + Зал Славы)
+// 5. TEA SHOP & SETTINGS (З кнопкою зв'язку @Veiqness та Залом Слави)
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
@@ -433,8 +480,45 @@ class TeaShopSettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
+          // КНОПКА ЗВ'ЯЗКУ З АВТОРОМ (@Veiqness)
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1B1B22),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: primaryColor.withOpacity(0.5)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Зв\'язок з Автором & Ключі', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                const Text('Потрібен Премиум-ключ або хочете підтримати проєкт? Пишіть автору в Telegram!', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                const SizedBox(height: 12),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primaryColor,
+                      foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    icon: const Icon(Icons.send_rounded),
+                    label: const Text('Telegram: @Veiqness', style: TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Контакт автора: @Veiqness (Telegram)')),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 24),
+
           // ЗАЛ СЛАВИ (HALL OF FAME)
-          const Text('Зал Слави (Підтримка проекту)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          const Text('Зал Слави (Підтримка проєкту)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.all(12),
