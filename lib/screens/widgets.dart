@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/ninjago_data.dart'; // <--- Оцим імпортом вирішується ця проблема
-
+import '../models/ninjago_data.dart';
 class EpisodeCard extends StatelessWidget {
   final Episode episode;
   final VoidCallback? onPlayPressed;
