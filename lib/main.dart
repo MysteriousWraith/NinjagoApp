@@ -20,24 +20,26 @@ class NinjagoArchiveApp extends StatefulWidget {
 class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   ElementTheme _currentElement = ElementTheme.energy;
   int _watchedCount = 1;
+  String _lastWatchedTitle = 'Шлях Ніндзя';
+  String _lastWatchedSeason = 'Пілотний сезон';
 
   Color get primaryColor {
     switch (_currentElement) {
       case ElementTheme.fire:
-        return const Color(0xFFFF3D00); // Кай
+        return const Color(0xFFFF3D00); // Кай (Вогонь)
       case ElementTheme.ice:
-        return const Color(0xFF00E5FF); // Зейн
+        return const Color(0xFF00E5FF); // Зейн (Лід)
       case ElementTheme.lightning:
-        return const Color(0xFF2979FF); // Джей
+        return const Color(0xFF2979FF); // Джей (Блискавка)
       case ElementTheme.earth:
-        return const Color(0xFFFF9100); // Коул
+        return const Color(0xFFFF9100); // Коул (Земля)
       case ElementTheme.water:
-        return const Color(0xFF00B0FF); // Нія
+        return const Color(0xFF00B0FF); // Нія (Вода)
       case ElementTheme.garmadon:
         return const Color(0xFFD500F9); // Тень Гармадона
       case ElementTheme.energy:
       default:
-        return const Color(0xFF76FF03); // Ллойд
+        return const Color(0xFF76FF03); // Ллойд (Енергія)
     }
   }
 
@@ -45,9 +47,11 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
     setState(() => _currentElement = element);
   }
 
-  void incrementWatched() {
+  void updateProgress(String season, String title) {
     setState(() {
       _watchedCount++;
+      _lastWatchedSeason = season;
+      _lastWatchedTitle = title;
     });
   }
 
@@ -70,14 +74,16 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
         currentElement: _currentElement,
         onElementChanged: changeElement,
         watchedCount: _watchedCount,
-        onEpisodeWatched: incrementWatched,
+        lastWatchedSeason: _lastWatchedSeason,
+        lastWatchedTitle: _lastWatchedTitle,
+        onEpisodeWatched: updateProgress,
       ),
     );
   }
 }
 
 // -----------------------------------------------------------------------------
-// MODELS
+// MODELS & FULL SEASONS BASE (0–15)
 // -----------------------------------------------------------------------------
 class Episode {
   final String season;
@@ -101,6 +107,22 @@ class Episode {
   });
 }
 
+class SeasonInfo {
+  final int number;
+  final String title;
+  final String year;
+  final int episodeCount;
+  final List<Episode> episodes;
+
+  SeasonInfo({
+    required this.number,
+    required this.title,
+    required this.year,
+    required this.episodeCount,
+    required this.episodes,
+  });
+}
+
 class SenseiQuote {
   final String quote;
   final String author;
@@ -114,12 +136,54 @@ final List<SenseiQuote> senseiQuotes = [
   SenseiQuote(quote: "Ніндзя ніколи не здаються, коли вірять у своїх друзів.", author: "Сенсей Ву"),
 ];
 
-List<Episode> episodesArchive = [
-  Episode(season: 'Пілотний сезон', number: 'Серія 1', title: 'Шлях Ніндзя', duration: '22 хв', quality: '1080p • Дубляж', description: 'Коваля Кая відвідує загадковий старий ремісник Ву...', isFavorite: true, isDownloaded: true),
-  Episode(season: 'Пілотний сезон', number: 'Серія 2', title: 'Зброя Зі Сходу', duration: '22 хв', quality: '1080p • Дубляж', description: 'Команда вирушає на пошуки Золотої Зброї Спінжитсу.'),
-  Episode(season: 'Сезон 1', number: 'Серія 1', title: 'Воскресіння Змій', duration: '21 хв', quality: '1080p • Дубляж', description: 'Ллойд Гармадон випадково випускає давнє племя Зміїних Кланів.', isFavorite: true),
-  Episode(season: 'Сезон 2', number: 'Серія 1', title: 'Зелений Ніндзя', duration: '22 хв', quality: '1080p • Дубляж', description: 'Час наближається до битви із Золотим Майстром.'),
+// Повна база сезонів 0–15
+final List<SeasonInfo> allSeasons = [
+  SeasonInfo(
+    number: 0,
+    title: 'Пілотний сезон (Шлях Ніндзя)',
+    year: '2011',
+    episodeCount: 2,
+    episodes: [
+      Episode(season: 'Пілотний сезон', number: 'Серія 1', title: 'Шлях Ніндзя', duration: '22 хв', quality: '1080p • Дубляж', description: 'Коваля Кая відвідує загадковий старий ремісник Ву та пропонує стати ніндзя.', isFavorite: true, isDownloaded: true),
+      Episode(season: 'Пілотний сезон', number: 'Серія 2', title: 'Зброя Зі Сходу', duration: '22 хв', quality: '1080p • Дубляж', description: 'Команда вирушає на пошуки чотирьох Золотих Зброй Спінжитсу.'),
+    ],
+  ),
+  SeasonInfo(
+    number: 1,
+    title: 'Сезон 1: Воскресіння Змій',
+    year: '2011-2012',
+    episodeCount: 13,
+    episodes: [
+      Episode(season: 'Сезон 1', number: 'Серія 1', title: 'Воскресіння Змій', duration: '22 хв', quality: '1080p • Дубляж', description: 'Ллойд Гармадон випадково випускає давнє племя Зміїних Кланів.', isFavorite: true),
+      Episode(season: 'Сезон 1', number: 'Серія 2', title: 'Дім', duration: '22 хв', quality: '1080p • Дубляж', description: 'Змії планують спалити монастир Спінжитсу.'),
+    ],
+  ),
+  SeasonInfo(
+    number: 2,
+    title: 'Сезон 2: Спадщина Зеленого Ніндзя',
+    year: '2012-2013',
+    episodeCount: 13,
+    episodes: [
+      Episode(season: 'Сезон 2', number: 'Серія 1', title: 'Темрява Наступає', duration: '22 хв', quality: '1080p • Дубляж', description: 'Ніндзя тренують Ллойда для вирішальної битви.'),
+      Episode(season: 'Сезон 2', number: 'Серія 2', title: 'Останнє Змагання', duration: '22 хв', quality: '1080p • Дубляж', description: 'Золотий Майстер розкриває свою справжню силу.'),
+    ],
+  ),
+  SeasonInfo(number: 3, title: 'Сезон 3: Перезавантаження', year: '2014', episodeCount: 8, episodes: [Episode(season: 'Сезон 3', number: 'Серія 1', title: 'Вхід у Цифровий Світ', duration: '22 хв', quality: '1080p • Дубляж', description: 'Ніндзяго-Сіті перетворилося на високотехнологічний мегаполіс.')]),
+  SeasonInfo(number: 4, title: 'Сезон 4: Турнір Стихій', year: '2015', episodeCount: 10, episodes: [Episode(season: 'Сезон 4', number: 'Серія 1', title: 'Запрошення Майстра Чена', duration: '22 хв', quality: '1080p • Дубляж', description: 'Ніндзя вирушають на таємничий острів Чена.')]),
+  SeasonInfo(number: 5, title: 'Сезон 5: Одержимість', year: '2015', episodeCount: 10, episodes: [Episode(season: 'Сезон 5', number: 'Серія 1', title: 'Подих Вітру', duration: '22 хв', quality: '1080p • Дубляж', description: 'Привид Морро захоплює тіло Ллойда.')]),
+  SeasonInfo(number: 6, title: 'Сезон 6: Небесні Пірати', year: '2016', episodeCount: 10, episodes: [Episode(season: 'Сезон 6', number: 'Серія 1', title: 'Печатка Небес', duration: '22 хв', quality: '1080p • Дубляж', description: 'Джинн Надахан повертається з ув’язнення.')]),
+  SeasonInfo(number: 7, title: 'Сезон 7: Руки Часу', year: '2017', episodeCount: 10, episodes: [Episode(season: 'Сезон 7', number: 'Серія 1', title: 'Блискавична Атака', duration: '22 хв', quality: '1080p • Дубляж', description: 'Близнюки Часу Повертаються у Монастир.')]),
+  SeasonInfo(number: 8, title: 'Сезон 8: Сини Гармадона', year: '2018', episodeCount: 10, episodes: [Episode(season: 'Сезон 8', number: 'Серія 1', title: 'Маска Обману', duration: '22 хв', quality: '1080p • Дубляж', description: 'Принцеса Харумі та бандити шукають Они-Маски.')]),
+  SeasonInfo(number: 9, title: 'Сезон 9: Зацьковані', year: '2018', episodeCount: 10, episodes: [Episode(season: 'Сезон 9', number: 'Серія 1', title: 'Перше Королівство', duration: '22 хв', quality: '1080p • Дубляж', description: 'Ніндзя потрапляють у світ Драконів та Они.')]),
+  SeasonInfo(number: 10, title: 'Сезон 10: Марш Они', year: '2019', episodeCount: 4, episodes: [Episode(season: 'Сезон 10', number: 'Серія 1', title: 'Наближення Темряви', duration: '22 хв', quality: '1080p • Дубляж', description: 'Они занурюють Ніндзяго-Сіті у вічну темряву.')]),
+  SeasonInfo(number: 11, title: 'Сезон 11: Секрети Забороненого Спінжитсу', year: '2019-2020', episodeCount: 30, episodes: [Episode(season: 'Сезон 11', number: 'Серія 1', title: 'Вогняна Вуаля', duration: '11 хв', quality: '1080p • Дубляж', description: 'Пробудження полум’яної змії Асфіри.')]),
+  SeasonInfo(number: 12, title: 'Сезон 12: Вищий Імперій', year: '2020', episodeCount: 16, episodes: [Episode(season: 'Сезон 12', number: 'Серія 1', title: 'Аркадний Світ', duration: '11 хв', quality: '1080p • Дубляж', description: 'Гравці зникають усередині старого ігрового автомата.')]),
+  SeasonInfo(number: 13, title: 'Сезон 13: Майстер Гори', year: '2020', episodeCount: 16, episodes: [Episode(season: 'Сезон 13', number: 'Серія 1', title: 'Королівство Сінтаро', duration: '11 хв', quality: '1080p • Дубляж', description: 'Команда подорожує до підземних шахт Сінтаро.')]),
+  SeasonInfo(number: 14, title: 'Сезон 14: Острів', year: '2021', episodeCount: 4, episodes: [Episode(season: 'Сезон 14', number: 'Серія 1', title: 'Таємниця Храму', duration: '11 хв', quality: '1080p • Дубляж', description: 'Ніндзя вирушають на незвіданий Острів Хранителів.')]),
+  SeasonInfo(number: 15, title: 'Сезон 15: Кристалізовані', year: '2022', episodeCount: 30, episodes: [Episode(season: 'Сезон 15', number: 'Серія 1', title: 'Заклики Кристалів', duration: '11 хв', quality: '1080p • Дубляж', description: 'Оверлорд збирає Ради Рад у Кристальному Замку.')]),
 ];
+
+List<Episode> episodesArchive = allSeasons.expand((s) => s.episodes).toList();
 
 // -----------------------------------------------------------------------------
 // MAIN CONTAINER
@@ -128,13 +192,17 @@ class MainContainer extends StatefulWidget {
   final ElementTheme currentElement;
   final Function(ElementTheme) onElementChanged;
   final int watchedCount;
-  final VoidCallback onEpisodeWatched;
+  final String lastWatchedSeason;
+  final String lastWatchedTitle;
+  final Function(String, String) onEpisodeWatched;
 
   const MainContainer({
     super.key,
     required this.currentElement,
     required this.onElementChanged,
     required this.watchedCount,
+    required this.lastWatchedSeason,
+    required this.lastWatchedTitle,
     required this.onEpisodeWatched,
   });
 
@@ -154,11 +222,13 @@ class _MainContainerState extends State<MainContainer> {
       HomeScreen(
         isPremium: _isPremium,
         watchedCount: widget.watchedCount,
+        lastWatchedSeason: widget.lastWatchedSeason,
+        lastWatchedTitle: widget.lastWatchedTitle,
         onWatch: widget.onEpisodeWatched,
       ),
-      const SeasonsCatalogScreen(),
+      SeasonsCatalogScreen(onWatch: widget.onEpisodeWatched),
       const TimelineScreen(),
-      const RadioScreen(), // Відновлене Радио Монастыря (Опенинги)
+      const RadioScreen(),
       const BackpackScreen(),
       TeaShopSettingsScreen(
         currentElement: widget.currentElement,
@@ -191,17 +261,99 @@ class _MainContainerState extends State<MainContainer> {
 }
 
 // -----------------------------------------------------------------------------
-// 1. HOME SCREEN (З кнопкою «Откат времени»)
+// VIDEO PLAYER SCREEN
+// -----------------------------------------------------------------------------
+class VideoPlayerScreen extends StatelessWidget {
+  final Episode episode;
+  final Function(String, String) onWatch;
+
+  const VideoPlayerScreen({super.key, required this.episode, required this.onWatch});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(episode.title, style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 220,
+            color: Colors.black,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                const Icon(Icons.movie_rounded, size: 64, color: Colors.white24),
+                CircleAvatar(
+                  radius: 30,
+                  backgroundColor: primaryColor,
+                  child: IconButton(
+                    icon: const Icon(Icons.play_arrow_rounded, color: Colors.black, size: 36),
+                    onPressed: () {
+                      onWatch(episode.season, episode.title);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Відтворення запущено (1080p • Дубляж)')),
+                      );
+                    },
+                  ),
+                ),
+                Positioned(
+                  bottom: 10,
+                  left: 16,
+                  right: 16,
+                  child: LinearProgressIndicator(
+                    value: 0.35,
+                    color: primaryColor,
+                    backgroundColor: Colors.white24,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('${episode.season} • ${episode.number}', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                Text(episode.title, style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 6),
+                Text('${episode.duration} | ${episode.quality}', style: const TextStyle(color: Colors.grey, fontSize: 13)),
+                const SizedBox(height: 16),
+                const Text('Опис серії:', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                const SizedBox(height: 6),
+                Text(episode.description, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 1. HOME SCREEN
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
   final int watchedCount;
-  final VoidCallback onWatch;
+  final String lastWatchedSeason;
+  final String lastWatchedTitle;
+  final Function(String, String) onWatch;
 
   const HomeScreen({
     super.key,
     required this.isPremium,
     required this.watchedCount,
+    required this.lastWatchedSeason,
+    required this.lastWatchedTitle,
     required this.onWatch,
   });
 
@@ -223,22 +375,22 @@ class HomeScreen extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Сенсей Ву перегорнув пісочний годинник! Випадкова серія для перегляду:'),
+            const Text('Сенсей Ву перегорнув пісочний годинник! Випадкова серія:'),
             const SizedBox(height: 12),
-            Text('${randomEpisode.season} - ${randomEpisode.number}\n«${randomEpisode.title}»', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 16)),
+            Text('${randomEpisode.season} - ${randomEpisode.number}
+«${randomEpisode.title}»', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 16)),
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Закрити'),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Закрити')),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, foregroundColor: Colors.black),
             onPressed: () {
               Navigator.pop(context);
-              onWatch();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Запуск: ${randomEpisode.title}')));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: randomEpisode, onWatch: onWatch)),
+              );
             },
             child: const Text('Дивитися'),
           ),
@@ -260,7 +412,7 @@ class HomeScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.history_rounded),
-            tooltip: 'Откат часу (Випадкова серія)',
+            tooltip: 'Откат часу',
             onPressed: () => _timeRollback(context),
           ),
         ],
@@ -297,6 +449,44 @@ class HomeScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1B1B22),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: primaryColor.withOpacity(0.4)),
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(color: primaryColor, borderRadius: BorderRadius.circular(12)),
+                  child: const Icon(Icons.play_arrow_rounded, color: Colors.black, size: 30),
+                ),
+                const SizedBox(width: 14),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Продовжити перегляд', style: TextStyle(color: Colors.grey, fontSize: 11)),
+                      const SizedBox(height: 2),
+                      Text(lastWatchedSeason, style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 12)),
+                      Text(lastWatchedTitle, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                    ],
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.arrow_forward_ios_rounded, color: primaryColor, size: 18),
+                  onPressed: () {
+                    final ep = episodesArchive.firstWhere((e) => e.title == lastWatchedTitle, orElse: () => episodesArchive[0]);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: onWatch)));
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+          Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
@@ -320,7 +510,9 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 22),
           const Text('Останні поступлення', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
-          ...episodesArchive.map((ep) => EpisodeCard(episode: ep, onPlayPressed: onWatch)),
+          ...episodesArchive.take(4).map((ep) => EpisodeCard(episode: ep, onPlayPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: onWatch)));
+          })),
         ],
       ),
     );
@@ -328,10 +520,12 @@ class HomeScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 2. SEASONS CATALOG
+// 2. SEASONS CATALOG & DETAIL SCREEN
 // -----------------------------------------------------------------------------
 class SeasonsCatalogScreen extends StatelessWidget {
-  const SeasonsCatalogScreen({super.key});
+  final Function(String, String) onWatch;
+
+  const SeasonsCatalogScreen({super.key, required this.onWatch});
 
   @override
   Widget build(BuildContext context) {
@@ -344,20 +538,58 @@ class SeasonsCatalogScreen extends StatelessWidget {
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
-        itemCount: 16,
+        itemCount: allSeasons.length,
         itemBuilder: (context, index) {
-          final title = index == 0 ? 'Пілотний сезон (2011)' : 'Сезон $index';
+          final s = allSeasons[index];
           return Card(
             color: const Color(0xFF1B1B22),
             margin: const EdgeInsets.only(bottom: 10),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: primaryColor.withOpacity(0.15))),
             child: ListTile(
-              title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-              subtitle: const Text('1080p • Український дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
+              title: Text(s.title, style: const TextStyle(fontWeight: FontWeight.bold)),
+              subtitle: Text('${s.year} • ${s.episodeCount} серій • 1080p Дубляж', style: const TextStyle(color: Colors.grey, fontSize: 12)),
               trailing: Icon(Icons.arrow_forward_ios_rounded, size: 16, color: primaryColor),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SeasonDetailScreen(season: s, onWatch: onWatch)),
+                );
+              },
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class SeasonDetailScreen extends StatelessWidget {
+  final SeasonInfo season;
+  final Function(String, String) onWatch;
+
+  const SeasonDetailScreen({super.key, required this.season, required this.onWatch});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(season.title, style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 18)),
+        backgroundColor: Colors.transparent,
+      ),
+      body: ListView(
+        padding: const EdgeInsets.all(16),
+        children: [
+          Text('Серії сезону (${season.episodes.length})', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: primaryColor)),
+          const SizedBox(height: 12),
+          ...season.episodes.map((ep) => EpisodeCard(
+            episode: ep,
+            onPlayPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: onWatch)));
+            },
+          )),
+        ],
       ),
     );
   }
@@ -381,11 +613,15 @@ class TimelineScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildTimelineItem(context, 'Епоха 1: Початок', 'Пілотні серії • Пошук Золотої Зброї Спінжитсу'),
-          _buildTimelineItem(context, 'Епоха 2: Класика', 'Сезони 1–2 • Зростання Серпентинів та битва з Оверлордом'),
-          _buildTimelineItem(context, 'Епоха 3: Техно', 'Сезон 3 • Перезавантаження та цифровий світ'),
-          _buildTimelineItem(context, 'Епоха 4: Турнір', 'Сезон 4 • Турнір Стихій Майстра Чена'),
-          _buildTimelineItem(context, 'Епоха 5: Привиди', 'Сезон 5 • Прокляте Королівство та Морро'),
+          _buildTimelineItem(context, 'Епоха 1: Початок (2011)', 'Пілотні серії • Пошук Золотої Зброї Спінжитсу'),
+          _buildTimelineItem(context, 'Епоха 2: Класика (2011-2013)', 'Сезони 1–2 • Зростання Серпентинів та битва з Оверлордом'),
+          _buildTimelineItem(context, 'Епоха 3: Техно (2014)', 'Сезон 3 • Перезавантаження та цифровий світ'),
+          _buildTimelineItem(context, 'Епоха 4: Турнір (2015)', 'Сезон 4 • Турнір Стихій Майстра Чена'),
+          _buildTimelineItem(context, 'Епоха 5: Привиди (2015)', 'Сезон 5 • Прокляте Королівство та Морро'),
+          _buildTimelineItem(context, 'Епоха 6: Небесні Пірати (2016)', 'Сезон 6 • Джинн Надахан та команда підземелля'),
+          _buildTimelineItem(context, 'Епоха 7: Руки Часу (2017)', 'Сезон 7 • Клинок Часу та Крук із Акроніксом'),
+          _buildTimelineItem(context, 'Епоха 8: Воскресіння (2018)', 'Сезони 8–10 • Трилогія Они та Маски Обману'),
+          _buildTimelineItem(context, 'Епоха 9: Нові Пригоди (2019-2022)', 'Сезони 11–15 • Від Асфіри до Кристального Замку'),
         ],
       ),
     );
@@ -420,7 +656,7 @@ class TimelineScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 4. RADIO SCREEN (Радио Монастыря / Опенинги)
+// 4. RADIO SCREEN
 // -----------------------------------------------------------------------------
 class RadioScreen extends StatefulWidget {
   const RadioScreen({super.key});
@@ -480,7 +716,7 @@ class _RadioScreenState extends State<RadioScreen> {
                   onPressed: () {
                     setState(() {
                       int index = tracks.indexOf(currentTrack);
-                      currentTrack = tracks[(index - 1) % tracks.length];
+                      currentTrack = tracks[(index - 1 + tracks.length) % tracks.length];
                     });
                   },
                 ),
@@ -533,7 +769,7 @@ class BackpackScreen extends StatelessWidget {
       ),
       body: downloaded.isEmpty
           ? const Center(child: Text('Рюкзак порожній.', style: TextStyle(color: Colors.grey)))
-      : ListView(
+          : ListView(
               padding: const EdgeInsets.all(16),
               children: downloaded.map((ep) => EpisodeCard(episode: ep)).toList(),
             ),
@@ -542,7 +778,7 @@ class BackpackScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 6. TEA SHOP & SETTINGS (Включая тему «Тень Гармадона»)
+// 6. TEA SHOP & SETTINGS
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
@@ -564,7 +800,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF1B1B22),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        title: Text('Зв\'язок з Автором', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text('Зв'язок з Автором', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
         content: const Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -575,10 +811,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Закрити', style: TextStyle(color: primaryColor)),
-          ),
+          TextButton(onPressed: () => Navigator.pop(context), child: Text('Закрити', style: TextStyle(color: primaryColor))),
         ],
       ),
     );
@@ -589,6 +822,8 @@ class TeaShopSettingsScreen extends StatelessWidget {
     final primaryColor = Theme.of(context).primaryColor;
     bool mechUnlocked = watchedCount >= 2;
     bool templeUnlocked = watchedCount >= 3;
+    bool bountyUnlocked = watchedCount >= 5;
+    bool raiderUnlocked = watchedCount >= 7;
 
     return Scaffold(
       appBar: AppBar(
@@ -619,13 +854,21 @@ class TeaShopSettingsScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(14), border: Border.all(color: primaryColor.withOpacity(0.2))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildLegoBadge(context, 'Дракон', Icons.electric_bolt, true, 'Розблоковано'),
-                _buildLegoBadge(context, 'Мех', Icons.local_fire_department, mechUnlocked, mechUnlocked ? 'Розблоковано' : 'Ще 2 перегляди'),
-                _buildLegoBadge(context, 'Монастир', Icons.temple_buddhist, templeUnlocked, templeUnlocked ? 'Розблоковано' : 'Ще 3 перегляди'),
-              ],
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  _buildLegoBadge(context, 'Дракон', Icons.electric_bolt, true, 'Розблоковано'),
+                  const SizedBox(width: 16),
+                  _buildLegoBadge(context, 'Мех', Icons.local_fire_department, mechUnlocked, mechUnlocked ? 'Розблоковано' : 'Ще 2 перегляди'),
+                  const SizedBox(width: 16),
+                  _buildLegoBadge(context, 'Монастир', Icons.temple_buddhist, templeUnlocked, templeUnlocked ? 'Розблоковано' : 'Ще 3 перегляди'),
+                  const SizedBox(width: 16),
+                  _buildLegoBadge(context, 'Дарунок Долі', Icons.sailing, bountyUnlocked, bountyUnlocked ? 'Розблоковано' : 'Ще 5 переглядів'),
+                  const SizedBox(width: 16),
+                  _buildLegoBadge(context, 'Рейдер', Icons.directions_car, raiderUnlocked, raiderUnlocked ? 'Розблоковано' : 'Ще 7 переглядів'),
+                ],
+              ),
             ),
           ),
           const SizedBox(height: 24),
@@ -639,7 +882,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Зв\'язок з Автором & Ключі', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
+                const Text('Зв'язок з Автором & Ключі', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 const Text('Потрібен Премиум-ключ або хочете підтримати проєкт? Пишіть автору в Telegram!', style: TextStyle(color: Colors.grey, fontSize: 12)),
                 const SizedBox(height: 14),
@@ -728,10 +971,7 @@ class EpisodeCard extends StatelessWidget {
           backgroundColor: primaryColor,
           child: IconButton(
             icon: const Icon(Icons.play_arrow_rounded, color: Colors.black),
-            onPressed: () {
-              if (onPlayPressed != null) onPlayPressed!();
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Відтворення: ${episode.title} (+1 до прогресу наборів!)'), duration: const Duration(seconds: 1)));
-            },
+            onPressed: onPlayPressed,
           ),
         ),
         title: Text('${episode.number}: ${episode.title}', style: const TextStyle(fontWeight: FontWeight.bold)),
@@ -744,6 +984,7 @@ class EpisodeCard extends StatelessWidget {
             Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryColor),
           ],
         ),
+        onTap: onPlayPressed,
       ),
     );
   }
