@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import '../models/ninjago_data.dart';
+import '../models/ninjago_data.dart'; // <--- Оцим імпортом вирішується ця проблема
 
 class EpisodeCard extends StatelessWidget {
   final Episode episode;
   final VoidCallback? onPlayPressed;
-  final VoidCallback? onFavoritePressed; // Додали колбек для закладок
+  final VoidCallback? onFavoritePressed; // Колбек для закладок
 
   const EpisodeCard({
     super.key, 
@@ -49,7 +49,6 @@ class EpisodeCard extends StatelessWidget {
               size: 20,
             ),
             const SizedBox(width: 4),
-            // Зробили іконку закладки клікабельною
             IconButton(
               icon: Icon(
                 episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, 
