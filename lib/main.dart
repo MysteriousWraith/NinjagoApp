@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 void main() {
   runApp(const NinjagoArchiveApp());
@@ -7,7 +8,7 @@ void main() {
 // -----------------------------------------------------------------------------
 // STYLES & ELEMENTAL THEMES (Стихії)
 // -----------------------------------------------------------------------------
-enum ElementTheme { energy, fire, ice, lightning, earth, water }
+enum ElementTheme { energy, fire, ice, lightning, earth, water, garmadon }
 
 class NinjagoArchiveApp extends StatefulWidget {
   const NinjagoArchiveApp({super.key});
@@ -23,18 +24,20 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   Color get primaryColor {
     switch (_currentElement) {
       case ElementTheme.fire:
-        return const Color(0xFFFF3D00); // Кай (Вогонь)
+        return const Color(0xFFFF3D00); // Кай
       case ElementTheme.ice:
-        return const Color(0xFF00E5FF); // Зейн (Лід)
+        return const Color(0xFF00E5FF); // Зейн
       case ElementTheme.lightning:
-        return const Color(0xFF2979FF); // Джей (Блискавка)
+        return const Color(0xFF2979FF); // Джей
       case ElementTheme.earth:
-        return const Color(0xFFFF9100); // Коул (Земля)
+        return const Color(0xFFFF9100); // Коул
       case ElementTheme.water:
-        return const Color(0xFF00B0FF); // Нія (Вода)
+        return const Color(0xFF00B0FF); // Нія
+      case ElementTheme.garmadon:
+        return const Color(0xFFD500F9); // Тень Гармадона
       case ElementTheme.energy:
       default:
-        return const Color(0xFF76FF03); // Ллойд (Енергія)
+        return const Color(0xFF76FF03); // Ллойд
     }
   }
 
@@ -112,33 +115,10 @@ final List<SenseiQuote> senseiQuotes = [
 ];
 
 List<Episode> episodesArchive = [
-  Episode(
-    season: 'Пілотний сезон',
-    number: 'Серія 1',
-    title: 'Шлях Ніндзя',
-    duration: '22 хв',
-    quality: '1080p • Дубляж',
-    description: 'Коваля Кая відвідує загадковий старий ремісник Ву...',
-    isFavorite: true,
-    isDownloaded: true,
-  ),
-  Episode(
-    season: 'Пілотний сезон',
-    number: 'Серія 2',
-    title: 'Зброя Зі Сходу',
-    duration: '22 хв',
-    quality: '1080p • Дубляж',
-    description: 'Команда вирушає на пошуки Золотої Зброї Спінжитсу.',
-  ),
-  Episode(
-    season: 'Сезон 1',
-    number: 'Серія 1',
-    title: 'Воскресіння Змій',
-    duration: '21 хв',
-    quality: '1080p • Дубляж',
-    description: 'Ллойд Гармадон випадково випускає давнє племя Зміїних Кланів.',
-    isFavorite: true,
-  ),
+  Episode(season: 'Пілотний сезон', number: 'Серія 1', title: 'Шлях Ніндзя', duration: '22 хв', quality: '1080p • Дубляж', description: 'Коваля Кая відвідує загадковий старий ремісник Ву...', isFavorite: true, isDownloaded: true),
+  Episode(season: 'Пілотний сезон', number: 'Серія 2', title: 'Зброя Зі Сходу', duration: '22 хв', quality: '1080p • Дубляж', description: 'Команда вирушає на пошуки Золотої Зброї Спінжитсу.'),
+  Episode(season: 'Сезон 1', number: 'Серія 1', title: 'Воскресіння Змій', duration: '21 хв', quality: '1080p • Дубляж', description: 'Ллойд Гармадон випадково випускає давнє племя Зміїних Кланів.', isFavorite: true),
+  Episode(season: 'Сезон 2', number: 'Серія 1', title: 'Зелений Ніндзя', duration: '22 хв', quality: '1080p • Дубляж', description: 'Час наближається до битви із Золотим Майстром.'),
 ];
 
 // -----------------------------------------------------------------------------
@@ -178,6 +158,7 @@ class _MainContainerState extends State<MainContainer> {
       ),
       const SeasonsCatalogScreen(),
       const TimelineScreen(),
+      const RadioScreen(), // Відновлене Радио Монастыря (Опенинги)
       const BackpackScreen(),
       TeaShopSettingsScreen(
         currentElement: widget.currentElement,
@@ -200,8 +181,9 @@ class _MainContainerState extends State<MainContainer> {
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Головна'),
           BottomNavigationBarItem(icon: Icon(Icons.video_collection), label: 'Архів'),
           BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Хронологія'),
+          BottomNavigationBarItem(icon: Icon(Icons.radio), label: 'Радіо'),
           BottomNavigationBarItem(icon: Icon(Icons.backpack), label: 'Рюкзак'),
-          BottomNavigationBarItem(icon: Icon(Icons.coffee), label: 'Лавка Ву'),
+          BottomNavigationBarItem(icon: Icon(Icons.coffee), label: 'Лавка'),
         ],
       ),
     );
@@ -209,7 +191,7 @@ class _MainContainerState extends State<MainContainer> {
 }
 
 // -----------------------------------------------------------------------------
-// 1. HOME SCREEN
+// 1. HOME SCREEN (З кнопкою «Откат времени»)
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
@@ -223,6 +205,48 @@ class HomeScreen extends StatelessWidget {
     required this.onWatch,
   });
 
+  void _timeRollback(BuildContext context) {
+    final randomEpisode = episodesArchive[Random().nextInt(episodesArchive.length)];
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: const Color(0xFF1B1B22),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Row(
+          children: [
+            Icon(Icons.history_rounded, color: Colors.amber),
+            SizedBox(width: 8),
+            Text('Откат Часу! ⏳'),
+          ],
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Сенсей Ву перегорнув пісочний годинник! Випадкова серія для перегляду:'),
+            const SizedBox(height: 12),
+            Text('${randomEpisode.season} - ${randomEpisode.number}\n«${randomEpisode.title}»', style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.amber, fontSize: 16)),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Закрити'),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, foregroundColor: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+              onWatch();
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Запуск: ${randomEpisode.title}')));
+            },
+            child: const Text('Дивитися'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
@@ -233,24 +257,23 @@ class HomeScreen extends StatelessWidget {
         title: Text('NINJAGO: Архів', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 22)),
         backgroundColor: Colors.transparent,
         elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.history_rounded),
+            tooltip: 'Откат часу (Випадкова серія)',
+            onPressed: () => _timeRollback(context),
+          ),
+        ],
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          // Свиток мудрості Сенсея Ву
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: primaryColor.withOpacity(0.5), width: 1.5),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.12),
-                  blurRadius: 12,
-                  spreadRadius: 1,
-                ),
-              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -273,8 +296,6 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-
-          // Статус Премиума
           Container(
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
@@ -329,10 +350,7 @@ class SeasonsCatalogScreen extends StatelessWidget {
           return Card(
             color: const Color(0xFF1B1B22),
             margin: const EdgeInsets.only(bottom: 10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(14),
-              side: BorderSide(color: primaryColor.withOpacity(0.15)),
-            ),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: primaryColor.withOpacity(0.15))),
             child: ListTile(
               title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: const Text('1080p • Український дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -363,17 +381,17 @@ class TimelineScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          _buildTimelineItem(context, 'Епоха 1: Початок', 'Пілотні серії • Пошук Золотої Зброї Спінжитсу', true),
-          _buildTimelineItem(context, 'Епоха 2: Класика', 'Сезони 1–2 • Зростання Серпентинів та битва з Оверлордом', false),
-          _buildTimelineItem(context, 'Епоха 3: Техно', 'Сезон 3 • Перезавантаження та цифровий світ', false),
-          _buildTimelineItem(context, 'Епоха 4: Турнір', 'Сезон 4 • Турнір Стихій Майстра Чена', false),
-          _buildTimelineItem(context, 'Епоха 5: Привиди', 'Сезон 5 • Прокляте Королівство та Морро', false),
+          _buildTimelineItem(context, 'Епоха 1: Початок', 'Пілотні серії • Пошук Золотої Зброї Спінжитсу'),
+          _buildTimelineItem(context, 'Епоха 2: Класика', 'Сезони 1–2 • Зростання Серпентинів та битва з Оверлордом'),
+          _buildTimelineItem(context, 'Епоха 3: Техно', 'Сезон 3 • Перезавантаження та цифровий світ'),
+          _buildTimelineItem(context, 'Епоха 4: Турнір', 'Сезон 4 • Турнір Стихій Майстра Чена'),
+          _buildTimelineItem(context, 'Епоха 5: Привиди', 'Сезон 5 • Прокляте Королівство та Морро'),
         ],
       ),
     );
   }
 
-  Widget _buildTimelineItem(BuildContext context, String title, String subtitle, bool isFirst) {
+  Widget _buildTimelineItem(BuildContext context, String title, String subtitle) {
     final primaryColor = Theme.of(context).primaryColor;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -402,7 +420,103 @@ class TimelineScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 4. BACKPACK SCREEN
+// 4. RADIO SCREEN (Радио Монастыря / Опенинги)
+// -----------------------------------------------------------------------------
+class RadioScreen extends StatefulWidget {
+  const RadioScreen({super.key});
+
+  @override
+  State<RadioScreen> createState() => _RadioScreenState();
+}
+
+class _RadioScreenState extends State<RadioScreen> {
+  bool isPlaying = false;
+  String currentTrack = 'The Weekend Whip (Classic Mix)';
+
+  final List<String> tracks = [
+    'The Weekend Whip (Classic Mix)',
+    'The Pirate Whip (Season 6)',
+    'The Falcon Whip (Zane Theme)',
+    'Ghost Whip (Season 5)',
+    'The Rift Whip (Dragons Rising Style)',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Радіо Монастиря', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: const Color(0xFF1B1B22),
+                border: Border.all(color: primaryColor.withOpacity(0.6), width: 3),
+                boxShadow: [BoxShadow(color: primaryColor.withOpacity(0.2), blurRadius: 20, spreadRadius: 5)],
+              ),
+              child: Icon(Icons.music_note_rounded, size: 64, color: primaryColor),
+            ),
+            const SizedBox(height: 30),
+            Text('Зараз грає:', style: TextStyle(color: Colors.grey.shade400, fontSize: 14)),
+            const SizedBox(height: 8),
+            Text(currentTrack, textAlign: TextAlign.center, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  iconSize: 36,
+                  icon: const Icon(Icons.skip_previous_rounded),
+                  color: primaryColor,
+                  onPressed: () {
+                    setState(() {
+                      int index = tracks.indexOf(currentTrack);
+                      currentTrack = tracks[(index - 1) % tracks.length];
+                    });
+                  },
+                ),
+                const SizedBox(width: 20),
+                CircleAvatar(
+                  radius: 32,
+                  backgroundColor: primaryColor,
+                  child: IconButton(
+                    iconSize: 32,
+                    icon: Icon(isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded, color: Colors.black),
+                    onPressed: () => setState(() => isPlaying = !isPlaying),
+                  ),
+                ),
+                const SizedBox(width: 20),
+                IconButton(
+                  iconSize: 36,
+                  icon: const Icon(Icons.skip_next_rounded),
+                  color: primaryColor,
+                  onPressed: () {
+                    setState(() {
+                      int index = tracks.indexOf(currentTrack);
+                      currentTrack = tracks[(index + 1) % tracks.length];
+                    });
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// 5. BACKPACK SCREEN
 // -----------------------------------------------------------------------------
 class BackpackScreen extends StatelessWidget {
   const BackpackScreen({super.key});
@@ -419,7 +533,7 @@ class BackpackScreen extends StatelessWidget {
       ),
       body: downloaded.isEmpty
           ? const Center(child: Text('Рюкзак порожній.', style: TextStyle(color: Colors.grey)))
-          : ListView(
+      : ListView(
               padding: const EdgeInsets.all(16),
               children: downloaded.map((ep) => EpisodeCard(episode: ep)).toList(),
             ),
@@ -428,7 +542,7 @@ class BackpackScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS
+// 6. TEA SHOP & SETTINGS (Включая тему «Тень Гармадона»)
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
@@ -457,10 +571,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
           children: [
             Text('Напишіть мені в Telegram для отримання Премиум-ключа або підтримки проєкту:'),
             SizedBox(height: 12),
-            SelectableText(
-              '@Veiqness',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber),
-            ),
+            SelectableText('@Veiqness', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.amber)),
           ],
         ),
         actions: [
@@ -476,7 +587,6 @@ class TeaShopSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-
     bool mechUnlocked = watchedCount >= 2;
     bool templeUnlocked = watchedCount >= 3;
 
@@ -500,6 +610,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
               _buildElementChip(context, 'Блискавка', ElementTheme.lightning, const Color(0xFF2979FF)),
               _buildElementChip(context, 'Земля', ElementTheme.earth, const Color(0xFFFF9100)),
               _buildElementChip(context, 'Вода', ElementTheme.water, const Color(0xFF00B0FF)),
+              _buildElementChip(context, 'Тень Гармадона', ElementTheme.garmadon, const Color(0xFFD500F9)),
             ],
           ),
           const SizedBox(height: 24),
@@ -507,11 +618,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: primaryColor.withOpacity(0.2)),
-            ),
+            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(14), border: Border.all(color: primaryColor.withOpacity(0.2))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -522,20 +629,12 @@ class TeaShopSettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-
-          // КНОПКА ЗВ'ЯЗКУ С TELEGRAM
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
               borderRadius: BorderRadius.circular(16),
               border: Border.all(color: primaryColor.withOpacity(0.5), width: 1.5),
-              boxShadow: [
-                BoxShadow(
-                  color: primaryColor.withOpacity(0.1),
-                  blurRadius: 10,
-                ),
-              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -547,12 +646,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-                      backgroundColor: primaryColor,
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                    ),
+                    style: ElevatedButton.styleFrom(backgroundColor: primaryColor, foregroundColor: Colors.black, padding: const EdgeInsets.symmetric(vertical: 14), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                     icon: const Icon(Icons.send_rounded),
                     label: const Text('Telegram: @Veiqness', style: TextStyle(fontWeight: FontWeight.bold)),
                     onPressed: () => _showTelegramDialog(context, primaryColor),
@@ -562,36 +656,18 @@ class TeaShopSettingsScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
-
-          // ЗАЛ СЛАВИ
           const Text('Зал Слави (Підтримка проєкту)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(14),
-              border: Border.all(color: primaryColor.withOpacity(0.2)),
-            ),
+            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(14), border: Border.all(color: primaryColor.withOpacity(0.2))),
             child: const Column(
               children: [
-                ListTile(
-                  leading: Text('🥇', style: TextStyle(fontSize: 22)),
-                  title: Text('Перший Майстер Спінжитсу'),
-                  subtitle: Text('Топ-спонсори та меценати'),
-                ),
+                ListTile(leading: Text('🥇', style: TextStyle(fontSize: 22)), title: Text('Перший Майстер Спінжитсу'), subtitle: Text('Топ-спонсори та меценати')),
                 Divider(color: Colors.white10),
-                ListTile(
-                  leading: Text('🥈', style: TextStyle(fontSize: 22)),
-                  title: Text('Провідні Ніндзя'),
-                  subtitle: Text('Власники Премиум-ключа'),
-                ),
+                ListTile(leading: Text('🥈', style: TextStyle(fontSize: 22)), title: Text('Провідні Ніндзя'), subtitle: Text('Власники Премиум-ключа')),
                 Divider(color: Colors.white10),
-                ListTile(
-                  leading: Text('🥉', style: TextStyle(fontSize: 22)),
-                  title: Text('Жителі Монастиря'),
-                  subtitle: Text('Друзі та активні фанати'),
-                ),
+                ListTile(leading: Text('🥉', style: TextStyle(fontSize: 22)), title: Text('Жителі Монастиря'), subtitle: Text('Друзі та активні фанати')),
               ],
             ),
           ),
@@ -607,10 +683,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
       selected: isSelected,
       selectedColor: color,
       backgroundColor: const Color(0xFF1B1B22),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-        side: BorderSide(color: isSelected ? color : Colors.white10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(color: isSelected ? color : Colors.white10)),
       onSelected: (_) => onElementChanged(theme),
     );
   }
@@ -649,10 +722,7 @@ class EpisodeCard extends StatelessWidget {
     return Card(
       color: const Color(0xFF1B1B22),
       margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: primaryColor.withOpacity(0.2)),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14), side: BorderSide(color: primaryColor.withOpacity(0.2))),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: primaryColor,
@@ -660,12 +730,7 @@ class EpisodeCard extends StatelessWidget {
             icon: const Icon(Icons.play_arrow_rounded, color: Colors.black),
             onPressed: () {
               if (onPlayPressed != null) onPlayPressed!();
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Відтворення: ${episode.title} (+1 до прогресу наборів!)'),
-                  duration: const Duration(seconds: 1),
-                ),
-              );
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Відтворення: ${episode.title} (+1 до прогресу наборів!)'), duration: const Duration(seconds: 1)));
             },
           ),
         ),
