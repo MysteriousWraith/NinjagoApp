@@ -989,4 +989,4 @@ class EpisodeCard extends StatelessWidget {
 }
 ```
 
-Скопіюй цей вміст у файл `lib/main.dart` і надсилай в GitHub через Termux!
+Файл `main.txt` створено. Скопіюй його вміст у ваш `lib/main.dart` в Acode, збережи та збирай проєкт через Termux! 🥷✨
