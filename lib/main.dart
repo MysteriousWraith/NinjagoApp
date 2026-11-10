@@ -151,7 +151,7 @@ class MainContainer extends StatefulWidget {
 
 class _MainContainerState extends State<MainContainer> {
   int _currentIndex = 0;
-  bool _isPremium = true; // Премиум активен по умолчанию для удобства
+  bool _isPremium = true;
 
   @override
   Widget build(BuildContext context) {
@@ -350,7 +350,7 @@ class OpeningsAudioScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS (З динамічною вітриною наборів)
+// 5. TEA SHOP & SETTINGS
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
@@ -370,7 +370,6 @@ class TeaShopSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
-    // Умови розблокування наборів залежно від кількості переглянутих серій
     bool mechUnlocked = watchedCount >= 2;
     bool templeUnlocked = watchedCount >= 3;
 
@@ -396,8 +395,6 @@ class TeaShopSettingsScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 24),
-          
-          // Вітрина наборів з динамічним розблокуванням
           Text('Вітрина Наборів (Прогрес: $watchedCount серій)', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 6),
           const Text('Дивіться серії, щоб розблокувати нові експонати на полиці!', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -435,4 +432,72 @@ class TeaShopSettingsScreen extends StatelessWidget {
       label: Text(label, style: TextStyle(color: isSelected ? Colors.black : Colors.white)),
       selected: isSelected,
       selectedColor: color,
-      backgroundColor: const Color(0xFF1B1B
+      backgroundColor: const Color(0xFF1B1B22),
+      onSelected: (_) => onElementChanged(theme),
+    );
+  }
+
+  Widget _buildLegoBadge(String name, IconData icon, bool unlocked, String subtitle) {
+    return Column(
+      children: [
+        CircleAvatar(
+          backgroundColor: unlocked ? Colors.amber : Colors.grey.withOpacity(0.2),
+          radius: 26,
+          child: Icon(icon, color: unlocked ? Colors.black : Colors.grey, size: 28),
+        ),
+        const SizedBox(height: 6),
+        Text(name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: unlocked ? Colors.white : Colors.grey)),
+        const SizedBox(height: 2),
+        Text(subtitle, style: TextStyle(fontSize: 9, color: unlocked ? Colors.amber : Colors.grey)),
+      ],
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
+// EPISODE CARD WIDGET
+// -----------------------------------------------------------------------------
+class EpisodeCard extends StatelessWidget {
+  final Episode episode;
+  final VoidCallback? onPlayPressed;
+
+  const EpisodeCard({super.key, required this.episode, this.onPlayPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    final primaryColor = Theme.of(context).primaryColor;
+
+    return Card(
+      color: const Color(0xFF1B1B22),
+      margin: const EdgeInsets.only(bottom: 10),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: ListTile(
+        leading: CircleAvatar(
+          backgroundColor: primaryColor,
+          child: IconButton(
+            icon: const Icon(Icons.play_arrow_rounded, color: Colors.black),
+            onPressed: () {
+              if (onPlayPressed != null) onPlayPressed!();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Відтворення: ${episode.title} (+1 до прогресу наборів!)'),
+                  duration: const Duration(seconds: 1),
+                ),
+              );
+            },
+          ),
+        ),
+        title: Text('${episode.number}: ${episode.title}', style: const TextStyle(fontWeight: FontWeight.bold)),
+        subtitle: Text('${episode.duration} • ${episode.quality}', style: const TextStyle(color: Colors.grey, fontSize: 12)),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(episode.isDownloaded ? Icons.download_done : Icons.download_outlined, color: Colors.grey, size: 20),
+            const SizedBox(width: 8),
+            Icon(episode.isFavorite ? Icons.bookmark : Icons.bookmark_border, color: primaryColor),
+          ],
+        ),
+      ),
+    );
+  }
+}
