@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const NinjagoArchiveApp());
@@ -23,19 +24,23 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
   Color get primaryColor {
     switch (_currentElement) {
       case ElementTheme.fire:
-        return const Color(0xFFFF3D00); // Кай
+        return const Color(0xFFFF3D00); // Кай (Вогонь)
       case ElementTheme.ice:
-        return const Color(0xFF00E5FF); // Зейн
+        return const Color(0xFF00E5FF); // Зейн (Лід)
       case ElementTheme.lightning:
-        return const Color(0xFF2979FF); // Джей
+        return const Color(0xFF2979FF); // Джей (Блискавка)
       case ElementTheme.earth:
-        return const Color(0xFFFF9100); // Коул
+        return const Color(0xFFFF9100); // Коул (Земля)
       case ElementTheme.water:
-        return const Color(0xFF00B0FF); // Нія
+        return const Color(0xFF00B0FF); // Нія (Вода)
       case ElementTheme.energy:
       default:
-        return const Color(0xFF76FF03); // Ллойд
+        return const Color(0xFF76FF03); // Ллойд (Енергія)
     }
+  }
+
+  Color get secondaryCardColor {
+    return primaryColor.withOpacity(0.08);
   }
 
   void changeElement(ElementTheme element) {
@@ -55,7 +60,7 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF101014),
+        scaffoldBackgroundColor: const Color(0xFF0F0F14),
         primaryColor: primaryColor,
         colorScheme: ColorScheme.dark(
           primary: primaryColor,
@@ -68,6 +73,7 @@ class _NinjagoArchiveAppState extends State<NinjagoArchiveApp> {
         onElementChanged: changeElement,
         watchedCount: _watchedCount,
         onEpisodeWatched: incrementWatched,
+        secondaryCardColor: secondaryCardColor,
       ),
     );
   }
@@ -104,7 +110,6 @@ class SenseiQuote {
   SenseiQuote({required this.quote, required this.author});
 }
 
-// Список мудростей Сенсея Ву
 final List<SenseiQuote> senseiQuotes = [
   SenseiQuote(quote: "Ніколи не відкладай на завтра те, що можна зробити сьогодні.", author: "Сенсей Ву"),
   SenseiQuote(quote: "Шлях до справжньої сили лежить через дисципліну та серце ніндзя.", author: "Сенсей Ву"),
@@ -150,6 +155,7 @@ class MainContainer extends StatefulWidget {
   final Function(ElementTheme) onElementChanged;
   final int watchedCount;
   final VoidCallback onEpisodeWatched;
+  final Color secondaryCardColor;
 
   const MainContainer({
     super.key,
@@ -157,6 +163,7 @@ class MainContainer extends StatefulWidget {
     required this.onElementChanged,
     required this.watchedCount,
     required this.onEpisodeWatched,
+    required this.secondaryCardColor,
   });
 
   @override
@@ -176,6 +183,7 @@ class _MainContainerState extends State<MainContainer> {
         isPremium: _isPremium,
         watchedCount: widget.watchedCount,
         onWatch: widget.onEpisodeWatched,
+        secondaryCardColor: widget.secondaryCardColor,
       ),
       const SeasonsCatalogScreen(),
       const TimelineScreen(),
@@ -185,6 +193,7 @@ class _MainContainerState extends State<MainContainer> {
         onElementChanged: widget.onElementChanged,
         isPremium: _isPremium,
         watchedCount: widget.watchedCount,
+        secondaryCardColor: widget.secondaryCardColor,
       ),
     ];
 
@@ -196,7 +205,7 @@ class _MainContainerState extends State<MainContainer> {
         type: BottomNavigationBarType.fixed,
         backgroundColor: const Color(0xFF141419),
         selectedItemColor: activeColor,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey.shade600,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Головна'),
           BottomNavigationBarItem(icon: Icon(Icons.video_collection), label: 'Архів'),
@@ -210,55 +219,64 @@ class _MainContainerState extends State<MainContainer> {
 }
 
 // -----------------------------------------------------------------------------
-// 1. HOME SCREEN (З цитатою Сенсея Ву)
+// 1. HOME SCREEN
 // -----------------------------------------------------------------------------
 class HomeScreen extends StatelessWidget {
   final bool isPremium;
   final int watchedCount;
   final VoidCallback onWatch;
+  final Color secondaryCardColor;
 
   const HomeScreen({
     super.key,
     required this.isPremium,
     required this.watchedCount,
     required this.onWatch,
+    required this.secondaryCardColor,
   });
 
   @override
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
-    // Беремо першу мудрість для демонстрації
     final quote = senseiQuotes[0];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('NINJAGO: Архів', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold)),
+        title: Text('NINJAGO: Архів', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 22)),
         backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          // Свиток мудрості Сенсея Ву
+          // Свиток мудрості Сенсея Ву (Глибинний стилізований дизайн)
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: primaryColor.withOpacity(0.4)),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: primaryColor.withOpacity(0.5), width: 1.5),
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(0.12),
+                  blurRadius: 12,
+                  spreadRadius: 1,
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   children: [
-                    Icon(Icons.menu_book_rounded, color: primaryColor, size: 20),
-                    const SizedBox(width: 8),
-                    Text('Свиток Мудрості Сенсея Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 13)),
+                    Icon(Icons.menu_book_rounded, color: primaryColor, size: 22),
+                    const SizedBox(width: 10),
+                    Text('Свиток Мудрості Сенсея Ву', style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold, fontSize: 14)),
                   ],
                 ),
-                const SizedBox(height: 8),
-                Text('"${quote.quote}"', style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 13, color: Colors.white70)),
-                const SizedBox(height: 4),
+                const SizedBox(height: 10),
+                Text('"${quote.quote}"', style: const TextStyle(fontStyle: FontStyle.italic, fontSize: 13, color: Colors.white70, height: 1.3)),
+                const SizedBox(height: 6),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text('— ${quote.author}', style: TextStyle(color: primaryColor, fontSize: 11, fontWeight: FontWeight.bold)),
@@ -273,7 +291,7 @@ class HomeScreen extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(color: primaryColor.withOpacity(0.3)),
             ),
             child: Row(
@@ -290,7 +308,7 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 22),
           const Text('Останні поступлення', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ...episodesArchive.map((ep) => EpisodeCard(episode: ep, onPlayPressed: onWatch)),
@@ -323,7 +341,10 @@ class SeasonsCatalogScreen extends StatelessWidget {
           return Card(
             color: const Color(0xFF1B1B22),
             margin: const EdgeInsets.only(bottom: 10),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(14),
+              side: BorderSide(color: primaryColor.withOpacity(0.15)),
+            ),
             child: ListTile(
               title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
               subtitle: const Text('1080p • Український дубляж', style: TextStyle(color: Colors.grey, fontSize: 12)),
@@ -372,7 +393,7 @@ class TimelineScreen extends StatelessWidget {
         Column(
           children: [
             CircleAvatar(radius: 8, backgroundColor: primaryColor),
-            Container(width: 2, height: 60, color: Colors.white10),
+            Container(width: 2, height: 60, color: primaryColor.withOpacity(0.3)),
           ],
         ),
         const SizedBox(width: 14),
@@ -419,13 +440,14 @@ class BackpackScreen extends StatelessWidget {
 }
 
 // -----------------------------------------------------------------------------
-// 5. TEA SHOP & SETTINGS (З кнопкою зв'язку @Veiqness та Залом Слави)
+// 5. TEA SHOP & SETTINGS (З прямим посиланням t.me/Veiqness)
 // -----------------------------------------------------------------------------
 class TeaShopSettingsScreen extends StatelessWidget {
   final ElementTheme currentElement;
   final Function(ElementTheme) onElementChanged;
   final bool isPremium;
   final int watchedCount;
+  final Color secondaryCardColor;
 
   const TeaShopSettingsScreen({
     super.key,
@@ -433,7 +455,19 @@ class TeaShopSettingsScreen extends StatelessWidget {
     required this.onElementChanged,
     required this.isPremium,
     required this.watchedCount,
+    required this.secondaryCardColor,
   });
+
+  Future<void> _openTelegram(BuildContext context) async {
+    final Uri url = Uri.parse('https://t.me/Veiqness');
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Не вдалося відкрити Telegram: @Veiqness')),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -454,6 +488,7 @@ class TeaShopSettingsScreen extends StatelessWidget {
           const SizedBox(height: 10),
           Wrap(
             spacing: 8,
+            runSpacing: 8,
             children: [
               _buildElementChip(context, 'Енергія', ElementTheme.energy, const Color(0xFF76FF03)),
               _buildElementChip(context, 'Вогонь', ElementTheme.fire, const Color(0xFFFF3D00)),
@@ -468,25 +503,35 @@ class TeaShopSettingsScreen extends StatelessWidget {
           const SizedBox(height: 12),
           Container(
             padding: const EdgeInsets.all(14),
-            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1B1B22),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: primaryColor.withOpacity(0.2)),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildLegoBadge('Дракон', Icons.electric_bolt, true, 'Розблоковано'),
-                _buildLegoBadge('Мех', Icons.local_fire_department, mechUnlocked, mechUnlocked ? 'Розблоковано' : 'Ще 2 перегляди'),
-                _buildLegoBadge('Монастир', Icons.temple_buddhist, templeUnlocked, templeUnlocked ? 'Розблоковано' : 'Ще 3 перегляди'),
+                _buildLegoBadge(context, 'Дракон', Icons.electric_bolt, true, 'Розблоковано'),
+                _buildLegoBadge(context, 'Мех', Icons.local_fire_department, mechUnlocked, mechUnlocked ? 'Розблоковано' : 'Ще 2 перегляди'),
+                _buildLegoBadge(context, 'Монастир', Icons.temple_buddhist, templeUnlocked, templeUnlocked ? 'Розблоковано' : 'Ще 3 перегляди'),
               ],
             ),
           ),
           const SizedBox(height: 24),
 
-          // КНОПКА ЗВ'ЯЗКУ З АВТОРОМ (@Veiqness)
+          // КНОПКА ЗВ'ЯЗКУ З ПРЯМИМ ПЕРЕХОДОМ В TELEGRAM
           Container(
             padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: const Color(0xFF1B1B22),
-              borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: primaryColor.withOpacity(0.5)),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: primaryColor.withOpacity(0.5), width: 1.5),
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(0.1),
+                  blurRadius: 10,
+                ),
+              ],
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,22 +539,19 @@ class TeaShopSettingsScreen extends StatelessWidget {
                 const Text('Зв\'язок з Автором & Ключі', style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 6),
                 const Text('Потрібен Премиум-ключ або хочете підтримати проєкт? Пишіть автору в Telegram!', style: TextStyle(color: Colors.grey, fontSize: 12)),
-                const SizedBox(height: 12),
+                const SizedBox(height: 14),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: primaryColor,
-                      foregroundColor: Colors.black,
-                      padding: const EdgeInsets.symmetric(vertical: 12),
+             foregroundColor: Colors.black,
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     icon: const Icon(Icons.send_rounded),
-                    label: const Text('Telegram: @Veiqness', style: TextStyle(fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Контакт автора: @Veiqness (Telegram)')),
-                      );
-                    },
+                    label: const Text('Написати в Telegram (@Veiqness)', style: TextStyle(fontWeight: FontWeight.bold)),
+                    onPressed: () => _openTelegram(context),
                   ),
                 ),
               ],
@@ -517,12 +559,16 @@ class TeaShopSettingsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 24),
 
-          // ЗАЛ СЛАВИ (HALL OF FAME)
+          // ЗАЛ СЛАВИ
           const Text('Зал Слави (Підтримка проєкту)', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
           Container(
             padding: const EdgeInsets.all(12),
-            decoration: BoxDecoration(color: const Color(0xFF1B1B22), borderRadius: BorderRadius.circular(12)),
+            decoration: BoxDecoration(
+              color: const Color(0xFF1B1B22),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: primaryColor.withOpacity(0.2)),
+            ),
             child: const Column(
               children: [
                 ListTile(
@@ -553,26 +599,31 @@ class TeaShopSettingsScreen extends StatelessWidget {
   Widget _buildElementChip(BuildContext context, String label, ElementTheme theme, Color color) {
     final isSelected = currentElement == theme;
     return ChoiceChip(
-      label: Text(label, style: TextStyle(color: isSelected ? Colors.black : Colors.white)),
+      label: Text(label, style: TextStyle(color: isSelected ? Colors.black : Colors.white, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
       selected: isSelected,
       selectedColor: color,
       backgroundColor: const Color(0xFF1B1B22),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+        side: BorderSide(color: isSelected ? color : Colors.white10),
+      ),
       onSelected: (_) => onElementChanged(theme),
     );
   }
 
-  Widget _buildLegoBadge(String name, IconData icon, bool unlocked, String subtitle) {
+  Widget _buildLegoBadge(BuildContext context, String name, IconData icon, bool unlocked, String subtitle) {
+    final primaryColor = Theme.of(context).primaryColor;
     return Column(
       children: [
         CircleAvatar(
-          backgroundColor: unlocked ? Colors.amber : Colors.grey.withOpacity(0.2),
+          backgroundColor: unlocked ? primaryColor : Colors.grey.withOpacity(0.2),
           radius: 26,
           child: Icon(icon, color: unlocked ? Colors.black : Colors.grey, size: 28),
         ),
         const SizedBox(height: 6),
         Text(name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: unlocked ? Colors.white : Colors.grey)),
         const SizedBox(height: 2),
-        Text(subtitle, style: TextStyle(fontSize: 9, color: unlocked ? Colors.amber : Colors.grey)),
+        Text(subtitle, style: TextStyle(fontSize: 9, color: unlocked ? primaryColor : Colors.grey)),
       ],
     );
   }
@@ -594,7 +645,10 @@ class EpisodeCard extends StatelessWidget {
     return Card(
       color: const Color(0xFF1B1B22),
       margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(color: primaryColor.withOpacity(0.2)),
+      ),
       child: ListTile(
         leading: CircleAvatar(
           backgroundColor: primaryColor,
