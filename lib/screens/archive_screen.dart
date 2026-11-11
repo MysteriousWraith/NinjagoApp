@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/ninjago_data.dart';
-import 'video_player_screen.dart';
+import '../services/episode_navigator.dart';
 import 'widgets.dart';
 
 class SeasonsCatalogScreen extends StatefulWidget {
@@ -36,7 +36,6 @@ class _SeasonsCatalogScreenState extends State<SeasonsCatalogScreen> {
   Widget build(BuildContext context) {
     final primaryColor = Theme.of(context).primaryColor;
 
-    // Глобальний пошук по епізодах у всіх сезонах, якщо введено текст
     List> matchingEpisodes = [];
     if (_searchQuery.isNotEmpty) {
       for (var season in allSeasons) {
@@ -57,7 +56,6 @@ class _SeasonsCatalogScreenState extends State<SeasonsCatalogScreen> {
       ),
       body: Column(
         children: [
-          // Рядок пошуку
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: TextField(
@@ -118,14 +116,10 @@ class _SeasonsCatalogScreenState extends State<SeasonsCatalogScreen> {
                               subtitle: Text(season.title, style: TextStyle(color: primaryColor, fontSize: 12)),
                               trailing: Icon(Icons.play_arrow_rounded, color: primaryColor),
                               onTap: () {
-                                Navigator.push(
+                                EpisodeNavigator.openEpisode(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) => VideoPlayerScreen(
-                                      episode: ep,
-                                      onWatch: widget.onWatch,
-                                    ),
-                                  ),
+                                  episode: ep,
+                                  onWatch: widget.onWatch,
                                 );
                               },
                             ),
@@ -262,7 +256,11 @@ class _SeasonDetailScreenState extends State<SeasonDetailScreen> {
                       ...filteredEpisodes.map((ep) => EpisodeCard(
                         episode: ep,
                         onPlayPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: widget.onWatch)));
+                          EpisodeNavigator.openEpisode(
+                            context,
+                            episode: ep,
+                            onWatch: widget.onWatch,
+                          );
                         },
                       )),
                     ],
@@ -273,4 +271,3 @@ class _SeasonDetailScreenState extends State<SeasonDetailScreen> {
     );
   }
 }
-

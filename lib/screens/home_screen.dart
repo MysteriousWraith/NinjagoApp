@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../models/ninjago_data.dart';
-import 'video_player_screen.dart';
+import '../services/episode_navigator.dart';
 import 'widgets.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -49,9 +49,10 @@ class HomeScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).primaryColor, foregroundColor: Colors.black),
             onPressed: () {
               Navigator.pop(context);
-              Navigator.push(
+              EpisodeNavigator.openEpisode(
                 context,
-                MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: randomEpisode, onWatch: onWatch)),
+                episode: randomEpisode,
+                onWatch: onWatch,
               );
             },
             child: const Text('Дивитися'),
@@ -141,7 +142,11 @@ class HomeScreen extends StatelessWidget {
                   icon: Icon(Icons.arrow_forward_ios_rounded, color: primaryColor, size: 18),
                   onPressed: () {
                     final ep = episodesArchive.firstWhere((e) => e.title == lastWatchedTitle, orElse: () => episodesArchive[0]);
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: onWatch)));
+                    EpisodeNavigator.openEpisode(
+                      context,
+                      episode: ep,
+                      onWatch: onWatch,
+                    );
                   },
                 ),
               ],
@@ -173,7 +178,11 @@ class HomeScreen extends StatelessWidget {
           const Text('Останні поступлення', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
           const SizedBox(height: 12),
           ...episodesArchive.take(4).map((ep) => EpisodeCard(episode: ep, onPlayPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => VideoPlayerScreen(episode: ep, onWatch: onWatch)));
+            EpisodeNavigator.openEpisode(
+              context,
+              episode: ep,
+              onWatch: onWatch,
+            );
           })),
         ],
       ),
