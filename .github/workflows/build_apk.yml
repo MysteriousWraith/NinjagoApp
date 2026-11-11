@@ -29,10 +29,11 @@ jobs:
         run: flutter pub get
 
       - name: Build Release APK
-        run: flutter build apk --release
+        run: flutter build apk --release --no-pub
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Ninjago-Release-APK
           path: build/app/outputs/flutter-apk/app-release.apk
+
