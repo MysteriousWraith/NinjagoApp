@@ -64,6 +64,7 @@ import ua.ninjago.archive.data.model.Season
 import ua.ninjago.archive.ui.viewmodel.ActivePlayback
 
 @OptIn(UnstableApi::class)
+@kotlin.OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun PlayerScreen(
     playback: ActivePlayback?,
@@ -226,7 +227,7 @@ fun PlayerScreen(
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 // Quick player controls: -10s, +10s, Skip Intro (+45s), Speed
-                @OptIn(ExperimentalLayoutApi::class)
+                
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
