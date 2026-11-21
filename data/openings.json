@@ -1,0 +1,82 @@
+{
+  "tracks": [
+    {
+      "id": "whip_original",
+      "title": "The Weekend Whip (Original)",
+      "season": "Сезони 1–2",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_rebooted",
+      "title": "The Rebooted Whip",
+      "season": "Сезон 3: Перезавантаження",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_anacondrai",
+      "title": "The Anacondrai Whip",
+      "season": "Сезон 4: Турнір Стихій",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_ghost",
+      "title": "The Ghost Whip",
+      "season": "Сезон 5: Одержимість",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_pirate",
+      "title": "The Pirate Whip",
+      "season": "Сезон 6: Небесні кордони",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_temporal",
+      "title": "The Temporal Whip",
+      "season": "Сезон 7: Руки Часу",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_wicked",
+      "title": "The Wicked Whip",
+      "season": "Сезон 11: Заборонений Спінжитсу",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_shintaro",
+      "title": "The Shintaro Dungeon Whip",
+      "season": "Сезон 13: Майстер Гори",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    },
+    {
+      "id": "whip_crystalized",
+      "title": "The Crystalized Whip",
+      "season": "Сезон 15: Кристалізовані",
+      "artist": "The Fold",
+      "audioUrl": "",
+      "telegramMessageId": 0
+    }
+  ],
+  "monasteryRadio": {
+    "title": "Радіо Монастиря • Lofi Чайна",
+    "subtitle": "Спокійна фонова музика для відпочинку та читання таймлайну",
+    "streamUrl": "",
+    "telegramMessageId": 0
+  }
+}

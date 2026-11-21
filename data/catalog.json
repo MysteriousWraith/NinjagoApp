@@ -1,0 +1,2370 @@
+{
+  "version": 3,
+  "updatedAt": "2026-11-21",
+  "seasons": [
+    {
+      "id": "s0",
+      "number": 0,
+      "title": "Пілотний сезон: Шлях Ніндзя",
+      "subtitle": "Початок історії • 2011",
+      "era": "classic",
+      "timelineOrder": 1,
+      "year": 2011,
+      "description": "Сенсей Ву збирає чотирьох юних майстрів стихій — Кая, Джея, Коула та Зейна, щоб захистити Золоту Зброю від Лорда Гармадона.",
+      "episodes": [
+        {
+          "id": "s0e1",
+          "number": 1,
+          "title": "Шлях Ніндзя",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 3,
+          "streamUrl": ""
+        },
+        {
+          "id": "s0e2",
+          "number": 2,
+          "title": "Король Тіней",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s1",
+      "number": 1,
+      "title": "Сезон 1: Повстання Змій",
+      "subtitle": "Легенда про Зеленого Ніндзя • 2011–2012",
+      "era": "classic",
+      "timelineOrder": 2,
+      "year": 2011,
+      "description": "Ллойд звільняє стародавні племена Серпентинів, а ніндзя шукають обраного Зеленого Ніндзя.",
+      "episodes": [
+        {
+          "id": "s1e1",
+          "number": 1,
+          "title": "Повстання Змій",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e2",
+          "number": 2,
+          "title": "Дім",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e3",
+          "number": 3,
+          "title": "Укус Змії",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e4",
+          "number": 4,
+          "title": "Ніколи Не Довіряй Зміям",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e5",
+          "number": 5,
+          "title": "Велика Проблема",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e6",
+          "number": 6,
+          "title": "Король Змій",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e7",
+          "number": 7,
+          "title": "Тік-Так",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e8",
+          "number": 8,
+          "title": "Один Раз Вкушений, Двічі Присоромлений",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e9",
+          "number": 9,
+          "title": "Ковалі Талантів",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e10",
+          "number": 10,
+          "title": "Зелений Ніндзя",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e11",
+          "number": 11,
+          "title": "Все З Нічого",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e12",
+          "number": 12,
+          "title": "Відродження Великого Пожирача",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s1e13",
+          "number": 13,
+          "title": "День Великого Пожирача",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "number": 2,
+      "title": "Сезон 2: Спадщина Зеленого Ніндзя",
+      "subtitle": "Фінальна битва • 2012",
+      "era": "classic",
+      "timelineOrder": 3,
+      "year": 2012,
+      "description": "Ллойд тренується, щоб протистояти Гармадону та темній силі Володаря на Острові Темряви.",
+      "episodes": [
+        {
+          "id": "s2e1",
+          "number": 1,
+          "title": "І З'явиться Темрява",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e2",
+          "number": 2,
+          "title": "Пірати Проти Ніндзя",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e3",
+          "number": 3,
+          "title": "Величезна Халепа",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e4",
+          "number": 4,
+          "title": "Перегони „Ніндзябол\"",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e5",
+          "number": 5,
+          "title": "Дитячі Забавки",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e6",
+          "number": 6,
+          "title": "Не В Тому Місці, Не В Той Час",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e7",
+          "number": 7,
+          "title": "Кам'яна Армія",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e8",
+          "number": 8,
+          "title": "День, Коли Ніндзяго Завмерло",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e9",
+          "number": 9,
+          "title": "Остання Подорож",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e10",
+          "number": 10,
+          "title": "Острів Темряви",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e11",
+          "number": 11,
+          "title": "Остання Надія",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e12",
+          "number": 12,
+          "title": "Повернення Володаря",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s2e13",
+          "number": 13,
+          "title": "Повстання Майстра Спінжитсу",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "number": 3,
+      "title": "Сезон 3: Перезавантаження",
+      "subtitle": "Ніндроїди та Цифросвіт • 2014",
+      "era": "classic",
+      "timelineOrder": 4,
+      "year": 2014,
+      "description": "Ніндзяго-Сіті стає футуристичним мегаполісом, але Золотий Майстер повертається з армією Ніндроїдів.",
+      "episodes": [
+        {
+          "id": "s3e1",
+          "number": 1,
+          "title": "Нова Хвиля",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e2",
+          "number": 2,
+          "title": "Мистецтво Тихого Кулака",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e3",
+          "number": 3,
+          "title": "Затемнення",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e4",
+          "number": 4,
+          "title": "Прокляття Золотого Майстра",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e5",
+          "number": 5,
+          "title": "Вхід У Цифросвіт",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e6",
+          "number": 6,
+          "title": "Кодове Ім'я Арктурус",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e7",
+          "number": 7,
+          "title": "Порожнеча",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s3e8",
+          "number": 8,
+          "title": "Титановий Ніндзя",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "number": 4,
+      "title": "Сезон 4: Турнір Елементів",
+      "subtitle": "Острів Майстра Чена • 2015",
+      "era": "classic",
+      "timelineOrder": 5,
+      "year": 2015,
+      "description": "Дізнавшись, що Зейн живий, ніндзя вирушають на таємний Турнір Елементів Майстра Чена.",
+      "episodes": [
+        {
+          "id": "s4e1",
+          "number": 1,
+          "title": "Запрошення",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e2",
+          "number": 2,
+          "title": "Залишиться Тільки Один",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e3",
+          "number": 3,
+          "title": "Суперники",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e4",
+          "number": 4,
+          "title": "Перегони Ніндзя",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e5",
+          "number": 5,
+          "title": "Шпигувати За Шпигуном",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e6",
+          "number": 6,
+          "title": "Зачаровані",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e7",
+          "number": 7,
+          "title": "Забута Стихія",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e8",
+          "number": 8,
+          "title": "День Дракона",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e9",
+          "number": 9,
+          "title": "Найбільший У Світі Страх",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s4e10",
+          "number": 10,
+          "title": "Коридор Старійшин",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "number": 5,
+      "title": "Сезон 5: Одержимість",
+      "subtitle": "Прокляття Морро • 2015",
+      "era": "classic",
+      "timelineOrder": 6,
+      "year": 2015,
+      "description": "Привид колишнього учня Ву на ім'я Морро вселяється в Ллойда, а Нія розкриває свою стихію Води.",
+      "episodes": [
+        {
+          "id": "s5e1",
+          "number": 1,
+          "title": "Вітер Змін",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e2",
+          "number": 2,
+          "title": "Казка Про Привидів",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e3",
+          "number": 3,
+          "title": "Пригоди У Стіксі",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e4",
+          "number": 4,
+          "title": "Храм З Привидами",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e5",
+          "number": 5,
+          "title": "Хованки",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e6",
+          "number": 6,
+          "title": "Прийде Царство",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e7",
+          "number": 7,
+          "title": "Звивистий Шлях",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e8",
+          "number": 8,
+          "title": "Смертельна Небезпека",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e9",
+          "number": 9,
+          "title": "Проклятий Світ (Частина 1)",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s5e10",
+          "number": 10,
+          "title": "Проклятий Світ (Частина 2)",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "number": 6,
+      "title": "Сезон 6: Небесні Кордони",
+      "subtitle": "Джин Надакхан • 2016",
+      "era": "classic",
+      "timelineOrder": 7,
+      "year": 2016,
+      "description": "Підступний джин Надакхан та небесні пірати викрадають ніндзя одного за одним, і порятунок залежить від Джея.",
+      "episodes": [
+        {
+          "id": "s6e1",
+          "number": 1,
+          "title": "Безславні",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e2",
+          "number": 2,
+          "title": "Ворог Народу Номер Один",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e3",
+          "number": 3,
+          "title": "Ув'язнені",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e4",
+          "number": 4,
+          "title": "Нещастя Повертається",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e5",
+          "number": 5,
+          "title": "З Доброї Волі",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e6",
+          "number": 6,
+          "title": "Мій Обід З Надакханом",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e7",
+          "number": 7,
+          "title": "Майстри Бажань",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e8",
+          "number": 8,
+          "title": "Останній Порятунок",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e9",
+          "number": 9,
+          "title": "Операція Стоп-Земля\"",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s6e10",
+          "number": 10,
+          "title": "Повернення",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_dotd",
+      "number": 65,
+      "title": "Спешл: День Спочилих",
+      "subtitle": "Між 6 та 7 сезонами • 2016",
+      "era": "special",
+      "timelineOrder": 8,
+      "year": 2016,
+      "description": "Коул повертається до Храму Аержитсу в День Спочилих, де Сенсей Янг пробуджує минулих лиходіїв.",
+      "episodes": [
+        {
+          "id": "sp_dotd_e1",
+          "number": 1,
+          "title": "День Спочилих (Повний спешл)",
+          "durationMinutes": 44,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_wus_teas",
+      "number": 66,
+      "title": "Спешл: Чайні історії Ву (Wu's Teas)",
+      "subtitle": "Короткометражки • 2017",
+      "era": "special",
+      "timelineOrder": 9,
+      "year": 2017,
+      "description": "Кумедні історії про нову чайну лавку Сенсея Ву «Мудрість Стіпса» та її суперників.",
+      "episodes": [
+        {
+          "id": "sp_wus_teas_e1",
+          "number": 1,
+          "title": "Чайні історії Ву (Повна збірка)",
+          "durationMinutes": 20,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_movie",
+      "number": 67,
+      "title": "Фільм: ЛЕГО Ніндзяго Фільм",
+      "subtitle": "Повнометражний фільм • 2017",
+      "era": "special",
+      "timelineOrder": 10,
+      "year": 2017,
+      "description": "Повнометражна пригода Ллойда та команди ніндзя в протистоянні з Гармадоном та Мяузилою.",
+      "episodes": [
+        {
+          "id": "sp_movie_e1",
+          "number": 1,
+          "title": "Фільм: ЛЕГО Ніндзяго (1080p UA)",
+          "durationMinutes": 101,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "number": 7,
+      "title": "Сезон 7: Руки Часу",
+      "subtitle": "Близнюки Часу Кракс і Акронікс • 2017",
+      "era": "classic",
+      "timelineOrder": 11,
+      "year": 2017,
+      "description": "Майстри Часу повертаються, щоб змінити історію Ніндзяго, а Кай і Нія дізнаються правду про батьків.",
+      "episodes": [
+        {
+          "id": "s7e1",
+          "number": 1,
+          "title": "Руки Часу",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e2",
+          "number": 2,
+          "title": "Броня",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e3",
+          "number": 3,
+          "title": "Час Зрадників",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e4",
+          "number": 4,
+          "title": "Крадії Металу",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e5",
+          "number": 5,
+          "title": "Лінія На Піску",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e6",
+          "number": 6,
+          "title": "Атака",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e7",
+          "number": 7,
+          "title": "Розкриття Таємниць",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e8",
+          "number": 8,
+          "title": "Пауза Й Ефект",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e9",
+          "number": 9,
+          "title": "З Вогню В Кипляче Море",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s7e10",
+          "number": 10,
+          "title": "Загублені В Часі",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "number": 8,
+      "title": "Сезон 8: Сини Гармадона",
+      "subtitle": "Маски Оні • 2018",
+      "era": "classic",
+      "timelineOrder": 12,
+      "year": 2018,
+      "description": "Таємничий культ «Сини Гармадона» шукає три Маски Оні, щоб воскресити Лорда Гармадона.",
+      "episodes": [
+        {
+          "id": "s8e1",
+          "number": 1,
+          "title": "Маска Обману",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e2",
+          "number": 2,
+          "title": "Принцеса-Нечупара",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e3",
+          "number": 3,
+          "title": "Оні Та Дракон",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e4",
+          "number": 4,
+          "title": "Змія-Ягуар",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e5",
+          "number": 5,
+          "title": "Крик Мерця",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e6",
+          "number": 6,
+          "title": "Кваєт Ван",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e7",
+          "number": 7,
+          "title": "Гра Масок",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e8",
+          "number": 8,
+          "title": "Жах Наступає",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e9",
+          "number": 9,
+          "title": "Справжній Потенціал",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s8e10",
+          "number": 10,
+          "title": "Велика Проблема, Маленький Ніндзяго",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "number": 9,
+      "title": "Сезон 9: Польовані",
+      "subtitle": "Перший Світ та Опір • 2018",
+      "era": "classic",
+      "timelineOrder": 13,
+      "year": 2018,
+      "description": "Частина команди потрапляє у світ Оні та Драконів, поки Ллойд і Нія очолюють опір у Ніндзяго-Сіті.",
+      "episodes": [
+        {
+          "id": "s9e1",
+          "number": 1,
+          "title": "Первісток",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e2",
+          "number": 2,
+          "title": "Залізо Та Камінь",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e3",
+          "number": 3,
+          "title": "Ніндзяго Без Радіо",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e4",
+          "number": 4,
+          "title": "Як Збудувати Дракона",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e5",
+          "number": 5,
+          "title": "Позолочений Шлях",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e6",
+          "number": 6,
+          "title": "Дві Брехні, Одна Правда",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e7",
+          "number": 7,
+          "title": "Найслабший Зв'язок",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e8",
+          "number": 8,
+          "title": "Порятунок Віри",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e9",
+          "number": 9,
+          "title": "Уроки Для Майстра",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s9e10",
+          "number": 10,
+          "title": "Зелена Доля",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_monastery",
+      "number": 95,
+      "title": "Спешл: Історії З Монастиря Спінжитсу",
+      "subtitle": "6 міні-серій • 2018",
+      "era": "special",
+      "timelineOrder": 14,
+      "year": 2018,
+      "description": "Шість легендарних спогадів про пригоди ніндзя, зображених на фресках Монастиря Спінжитсу.",
+      "episodes": [
+        {
+          "id": "sp_monasterye1",
+          "number": 1,
+          "title": "Майстер Клас",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_monasterye2",
+          "number": 2,
+          "title": "Зелений І Золотий",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_monasterye3",
+          "number": 3,
+          "title": "Недільне Тренування",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_monasterye4",
+          "number": 4,
+          "title": "Вершник Стихій",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_monasterye5",
+          "number": 5,
+          "title": "Синя Блискавка",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_monasterye6",
+          "number": 6,
+          "title": "Самурайський Екс-Трим",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "number": 10,
+      "title": "Сезон 10: Навала Оні",
+      "subtitle": "Вторгнення темряви • 2019",
+      "era": "classic",
+      "timelineOrder": 15,
+      "year": 2019,
+      "description": "Стародавні демони Оні приходять у Ніндзяго, змушуючи ніндзя об'єднатися навіть із Гармадоном.",
+      "episodes": [
+        {
+          "id": "s10e1",
+          "number": 1,
+          "title": "Пітьма Наближається",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s10e2",
+          "number": 2,
+          "title": "Напролом",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s10e3",
+          "number": 3,
+          "title": "Поразка",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s10e4",
+          "number": 4,
+          "title": "Навала Оні. Кінець",
+          "durationMinutes": 22,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "number": 11,
+      "title": "Сезон 11: Таємниці Забороненого Спінжитсу",
+      "subtitle": "Частина 1: Вогонь • Частина 2: Крига • 2019–2020",
+      "era": "new_era",
+      "timelineOrder": 16,
+      "year": 2019,
+      "description": "Асфіра викрадає силу Кая, а згодом команда вирушає у крижане Невер-Королівство на порятунок Зейна.",
+      "episodes": [
+        {
+          "id": "s11e1",
+          "number": 1,
+          "title": "[Вогонь] Втрачена Сила",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e2",
+          "number": 2,
+          "title": "[Вогонь] У Пошуках Завдання",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e3",
+          "number": 3,
+          "title": "[Вогонь] Тернистий Початок",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e4",
+          "number": 4,
+          "title": "[Вогонь] У Череві Звіра",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e5",
+          "number": 5,
+          "title": "[Вогонь] Як Вибратися З Пастки",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e6",
+          "number": 6,
+          "title": "[Вогонь] Новини Не Сплять",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e7",
+          "number": 7,
+          "title": "[Вогонь] Ніндзя Проти Лави",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e8",
+          "number": 8,
+          "title": "[Вогонь] Зміїна Навала",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e9",
+          "number": 9,
+          "title": "[Вогонь] Безсилі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e10",
+          "number": 10,
+          "title": "[Вогонь] Прадавня Історія",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e11",
+          "number": 11,
+          "title": "[Вогонь] Нікого Не Довіряй Людям",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e12",
+          "number": 12,
+          "title": "[Вогонь] В Облозі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e13",
+          "number": 13,
+          "title": "[Вогонь] Клуб Дослідників",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e14",
+          "number": 14,
+          "title": "[Вогонь] Час Розплати",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e15",
+          "number": 15,
+          "title": "[Вогонь] Холодне Прощання",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e16",
+          "number": 16,
+          "title": "[Крига] Порожнеча",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e17",
+          "number": 17,
+          "title": "[Крига] Творець Вогню",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e18",
+          "number": 18,
+          "title": "[Крига] Несподіваний Союзник",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e19",
+          "number": 19,
+          "title": "[Крига] Найнестерпніший Ніндзя",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e20",
+          "number": 20,
+          "title": "[Крига] Послання",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e21",
+          "number": 21,
+          "title": "[Крига] Мандрівне Дерево",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e22",
+          "number": 22,
+          "title": "[Крига] Тужіння Крега",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e23",
+          "number": 23,
+          "title": "[Крига] Таємниця Вовка",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e24",
+          "number": 24,
+          "title": "[Крига] Остання З Перевертнів",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e25",
+          "number": 25,
+          "title": "[Крига] Мій Друг - Мій Ворог",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e26",
+          "number": 26,
+          "title": "[Крига] Операція „Монстр\"",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e27",
+          "number": 27,
+          "title": "[Крига] Обман",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e28",
+          "number": 28,
+          "title": "[Крига] Крихка Надія",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e29",
+          "number": 29,
+          "title": "[Крига] Раз І Назавжди",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s11e30",
+          "number": 30,
+          "title": "[Крига] Пробудження",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "number": 12,
+      "title": "Сезон 12: Верховна Імперія",
+      "subtitle": "Світ відеогри • 2020",
+      "era": "new_era",
+      "timelineOrder": 17,
+      "year": 2020,
+      "description": "Гравці зникають у загадковій аркадній грі «Верховна Імперія», і ніндзя мусять пройти її зсередини.",
+      "episodes": [
+        {
+          "id": "s12e1",
+          "number": 1,
+          "title": "Увійти У Верховну Імперію?",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e2",
+          "number": 2,
+          "title": "Острів Дайєра",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e3",
+          "number": 3,
+          "title": "Тринадцятий Рівень",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e4",
+          "number": 4,
+          "title": "Джей - Рок-Зірка",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e5",
+          "number": 5,
+          "title": "Я - Окіно",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e6",
+          "number": 6,
+          "title": "Глюк",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e7",
+          "number": 7,
+          "title": "Скелі Істерії",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e8",
+          "number": 8,
+          "title": "Лабіринт Червоного Дракона",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e9",
+          "number": 9,
+          "title": "Крок Уперед, І Два Назад",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e10",
+          "number": 10,
+          "title": "Гонщиця Сімка",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e11",
+          "number": 11,
+          "title": "Перегони „П'ять Мільярдів\"",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e12",
+          "number": 12,
+          "title": "Світ Старих Ігор",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e13",
+          "number": 13,
+          "title": "Цілком Таємно",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e14",
+          "number": 14,
+          "title": "Блудний Батько",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e15",
+          "number": 15,
+          "title": "Храм Безумства",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s12e16",
+          "number": 16,
+          "title": "Кінець Гри",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_prime_shorts",
+      "number": 125,
+      "title": "Спешл: Prime Empire Shorts",
+      "subtitle": "6 міні-серій • 2020",
+      "era": "special",
+      "timelineOrder": 18,
+      "year": 2020,
+      "description": "Шість бонусних історій зі світу Верховної Імперії.",
+      "episodes": [
+        {
+          "id": "sp_prime_shortse1",
+          "number": 1,
+          "title": "Нумо Танцювати",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_prime_shortse2",
+          "number": 2,
+          "title": "Оновлення",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_prime_shortse3",
+          "number": 3,
+          "title": "Значення Перемоги",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_prime_shortse4",
+          "number": 4,
+          "title": "Застряглий Пасажир",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_prime_shortse5",
+          "number": 5,
+          "title": "Погоня",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_prime_shortse6",
+          "number": 6,
+          "title": "Гейл Балакуха: Знайти Істину",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "number": 13,
+      "title": "Сезон 13: Майстер Гори",
+      "subtitle": "Підземелля Сінтаро • 2020",
+      "era": "new_era",
+      "timelineOrder": 19,
+      "year": 2020,
+      "description": "Коул розкриває таємницю спадщини своєї матері в підземеллях Королівства Сінтаро.",
+      "episodes": [
+        {
+          "id": "s13e1",
+          "number": 1,
+          "title": "Сінтаро",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e2",
+          "number": 2,
+          "title": "У Пітьму",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e3",
+          "number": 3,
+          "title": "План - Просто Жах",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e4",
+          "number": 4,
+          "title": "Два Мечі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e5",
+          "number": 5,
+          "title": "Королева Мансів",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e6",
+          "number": 6,
+          "title": "Суд Міно",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e7",
+          "number": 7,
+          "title": "Кістяний Чаклун",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e8",
+          "number": 8,
+          "title": "Падіння На Дно",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e9",
+          "number": 9,
+          "title": "Вечірка У Підземеллі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e10",
+          "number": 10,
+          "title": "Жах У Підземеллі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e11",
+          "number": 11,
+          "title": "Громитель",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e12",
+          "number": 12,
+          "title": "Майстри Не Здаються",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e13",
+          "number": 13,
+          "title": "Темна Година",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e14",
+          "number": 14,
+          "title": "Сходження",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e15",
+          "number": 15,
+          "title": "Удар У Відповідь!",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s13e16",
+          "number": 16,
+          "title": "Син Лілі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_island",
+      "number": 135,
+      "title": "Спешл: Острів",
+      "subtitle": "4 серії перед 14 сезоном • 2021",
+      "era": "special",
+      "timelineOrder": 20,
+      "year": 2021,
+      "description": "Експедиція на незвіданий острів Хранителів Амулета, де зникли Місако, Майстер Ву та Клатч Паверс.",
+      "episodes": [
+        {
+          "id": "sp_islande1",
+          "number": 1,
+          "title": "Незвіданне",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_islande2",
+          "number": 2,
+          "title": "Хранителі Амулета",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_islande3",
+          "number": 3,
+          "title": "Дарунок Джея",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_islande4",
+          "number": 4,
+          "title": "Зуб Во-Джіри",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s14",
+      "number": 14,
+      "title": "Сезон 14: Морська Пригода",
+      "subtitle": "Пробудження Воджири • 2021",
+      "era": "new_era",
+      "timelineOrder": 21,
+      "year": 2021,
+      "description": "Нія втрачає контроль над стихією і вирушає в глибини моря, щоб зупинити Принца Каалмара.",
+      "episodes": [
+        {
+          "id": "s14e1",
+          "number": 1,
+          "title": "Великий Сплеск",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e2",
+          "number": 2,
+          "title": "Сигнал З Глибин",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e3",
+          "number": 3,
+          "title": "Непотопляючі",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e4",
+          "number": 4,
+          "title": "Дев'ять Тисяч Метрів Під Водою",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e5",
+          "number": 5,
+          "title": "Гнів Каалмара",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e6",
+          "number": 6,
+          "title": "Хай Живе Король",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e7",
+          "number": 7,
+          "title": "Втеча З Мерлопії",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e8",
+          "number": 8,
+          "title": "Повість Про Бентомаара",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e9",
+          "number": 9,
+          "title": "Штормовий Амулет",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e10",
+          "number": 10,
+          "title": "Загадка Сфінкса",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e11",
+          "number": 11,
+          "title": "Дівчинка Листоноша",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e12",
+          "number": 12,
+          "title": "Майстер Моря",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e13",
+          "number": 13,
+          "title": "Затишшя Перед Бурею",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e14",
+          "number": 14,
+          "title": "Штурм Міста Ніндзяго",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e15",
+          "number": 15,
+          "title": "Ніяд",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s14e16",
+          "number": 16,
+          "title": "Поворот Течії",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "sp_reimagined",
+      "number": 145,
+      "title": "Спешл: Спадщина Ніндзяго: Переосмислення",
+      "subtitle": "5 міні-серій • 2021",
+      "era": "special",
+      "timelineOrder": 22,
+      "year": 2021,
+      "description": "П'ять стилізованих анімаційних історій до ювілею всесвіту LEGO Ninjago.",
+      "episodes": [
+        {
+          "id": "sp_reimaginede1",
+          "number": 1,
+          "title": "Золота Легенда",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_reimaginede2",
+          "number": 2,
+          "title": "Золота Погоня",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_reimaginede3",
+          "number": 3,
+          "title": "Один День З Життя Золотого Ніндзя",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_reimaginede4",
+          "number": 4,
+          "title": "Пітливість До Золотих",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "sp_reimaginede5",
+          "number": 5,
+          "title": "Золота Година",
+          "durationMinutes": 4,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    },
+    {
+      "id": "s15",
+      "number": 15,
+      "title": "Сезон 15: Кристалізовані",
+      "subtitle": "Грандіозний фінал саги • 2022",
+      "era": "new_era",
+      "timelineOrder": 23,
+      "year": 2022,
+      "description": "Кришталевий Король збирає Раду найнебезпечніших ворогів Ніндзяго для вирішальної битви.",
+      "episodes": [
+        {
+          "id": "s15e1",
+          "number": 1,
+          "title": "Прощавай Море",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e2",
+          "number": 2,
+          "title": "Поклик Дому",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e3",
+          "number": 3,
+          "title": "Форма Нії",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e4",
+          "number": 4,
+          "title": "Головна Проблема",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e5",
+          "number": 5,
+          "title": "Ворог Народу Номер 1, 2, 3, 4 Та 5!",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e6",
+          "number": 6,
+          "title": "Болюча Обіцянка",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e7",
+          "number": 7,
+          "title": "Ніндзяго Сіті Проти Ніндзя",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e8",
+          "number": 8,
+          "title": "Тюремний Блюз Криптаріуму",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e9",
+          "number": 9,
+          "title": "Гонча Собака МакБраґ",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e10",
+          "number": 10,
+          "title": "Перевага Горя",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e11",
+          "number": 11,
+          "title": "П'ятий Злодій",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e12",
+          "number": 12,
+          "title": "Рада Кришталевого Короля",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e13",
+          "number": 13,
+          "title": "Зловісна Тінь",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e14",
+          "number": 14,
+          "title": "Павучий Дизайн",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e15",
+          "number": 15,
+          "title": "Падіння Монастиря",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e16",
+          "number": 16,
+          "title": "Пітьма Всередині",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e17",
+          "number": 17,
+          "title": "Прибуття Короля",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e18",
+          "number": 18,
+          "title": "Повернення До Первісного Ока",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e19",
+          "number": 19,
+          "title": "Кристастрофа",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e20",
+          "number": 20,
+          "title": "Христоферн",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e21",
+          "number": 21,
+          "title": "Урок Гніву",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e22",
+          "number": 22,
+          "title": "Хоробрий, Але Дурний",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e23",
+          "number": 23,
+          "title": "Час Здаватися!",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e24",
+          "number": 24,
+          "title": "Повернення Крижаного Імператора",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e25",
+          "number": 25,
+          "title": "Притулок",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e26",
+          "number": 26,
+          "title": "Сумісність",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e27",
+          "number": 27,
+          "title": "Сигнал Лиха",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e28",
+          "number": 28,
+          "title": "Питання Довіри",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e29",
+          "number": 29,
+          "title": "Форма Дракона",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        },
+        {
+          "id": "s15e30",
+          "number": 30,
+          "title": "Коріння",
+          "durationMinutes": 11,
+          "quality": "1080p UA",
+          "telegramMessageId": 0,
+          "streamUrl": ""
+        }
+      ]
+    }
+  ]
+}
